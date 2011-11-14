@@ -1,0 +1,16 @@
+function template:
+(1), function template and non-template function can overload at the same file, when there are all fitable for call,
+    compiler choose non-template function first
+(2), Automatic type conversion only for non-template function
+(3), all overload function transform arguement by reference, two cautious: first, if the number of the function arguement is 
+   different; second, the arguement's type of the function is different, or it will bring side effect 
+(4), function called should be defined before calling
+
+class template:
+(1), completily declaration must be added showly before class's function, when you define class's function outside of class
+(2), template arguement of class must be added showly, when you use template class 
+(3), template class and template class's function instantiated separated, the latter instantiated until
+   you use a template class's function  
+(4), if a template class has a static data member, it will instantiated with template class
+(5), template class specialization like as function overload, specialization class can defined what different from template class
+(6), default template arguement
