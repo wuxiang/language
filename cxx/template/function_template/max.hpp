@@ -1,5 +1,9 @@
 #include <iostream>
+#include <string>
 
+class userObj
+{
+};
 const int s_max(const int a, const int b)
 {
     return (a < b ? b : a);
@@ -31,3 +35,14 @@ const T1 s_max(const T2& a, const T3& b)
 	return (a > b ? a : b);
 }
 
+template<typename T, int VAL>
+T addValue(const T& x)
+{
+    return x + VAL;
+}
+
+//template<typename T, userObj VAL>
+//T AddValue(const T& x)
+//{
+//    return x + VAL;
+//}
