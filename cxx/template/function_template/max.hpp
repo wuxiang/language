@@ -42,9 +42,9 @@ T addValue(const T& x)
 }
 
 template<>
-int addValue<int, int VAL=5>(const int x)
+int addValue<int, 8>(const int& x)
 {
-    return VAL + x;
+    return x + 9;
 }
 
 //template<typename T, userObj VAL>

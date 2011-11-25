@@ -23,10 +23,6 @@ int main()
     std::cout << d[0] << "," << d[9] << std::endl;
     //std::all_of(d.begin(), d.end(), std::ostream_iterator<int>(std::cout, ""));
 
-    std::vector<int>  r(10, 8);
-    std::vector<int>  m(10);
-    std::transform(r.begin(), r.end(), m.begin(), addValue<int, 5>);
-    std::cout << m[0] << "," << m[9] << std::endl;
     //class template test
     try {
         Stack<int>  intStack;
