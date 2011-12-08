@@ -41,6 +41,12 @@ T addValue(const T& x)
     return x + VAL;
 }
 
+template<>
+int addValue<int, 8>(const int& x)
+{
+    return x + 9;
+}
+
 //template<typename T, userObj VAL>
 //T AddValue(const T& x)
 //{
