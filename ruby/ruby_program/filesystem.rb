@@ -1,4 +1,5 @@
 #!/usr/bin/ruby -w
+require "open-uri"
 
 #here is something about file system
 
@@ -31,11 +32,11 @@ puts "+++++++++++++++3++++++++++++++++++++++"
 flags = File::FNM_PATHNAME | File::FNM_DOTMATCH;
 puts File.fnmatch("lib/*.rb", "lib/a.rb", flags);
 puts "+++++++++++++++3++++++++++++++++++++++"
-dirname = Dir.entries("../../..");
+dirname = Dir.entries("../../.."); #first
 puts dirname;
 puts "+++++++++++++++4++++++++++++++++++++++"
 index = 0;
-Dir.foreach(".") {|filename| 
+Dir.foreach(".") {|filename| #second
 	index += 1;
 	print "#{filename} ";
 	if(index>5)
@@ -49,8 +50,7 @@ array = Dir['*.rb'];
 puts array;
 puts Dir.getwd;
 puts "+++++++++++++++6++++++++++++++++++++++"
-def findfile(path, ext)
-#puts File.expand_path(path);
+def findfile(path, ext)  #find a file whose extent name is ext
 hasdir = false;
 hasmatch = false;
 existname = "";
@@ -101,6 +101,44 @@ end
 
 puts "++++++++++++++++++++++++++++8+++++++++++++++++++++++++++";
 puts findfile(File.expand_path("../../"), /\.[ch]/);
+File.open("test.txt", "w") { |filename|
+	filename.write("hello");
+}
+puts "+++++++++++++++deal file+++++++++++++++";
+
+File.open("test.txt", "a") {|filename|
+filename.write(" world");
+}
+
+#Dir.mkdir("temp");
+#Dir.chdir("temp") {
+#	Dir.mkdir("temp1");
+#	File.open("hello.txt", "w");
+#	File.open("hello1.txt", "w");
+#}
+
+#Dir.rmdir("temp");
+#Dir.delete("temp");
+#Dir.unlink("temp");
+puts "==============get page======================";
+f = open("http://www.baidu.com");
+webpage = f.read;
+puts webpage;
+f.close;
+
+puts "==============get file======================";
+data = File.read("main.rb");
+puts data;
+
+f = File.open("main.rb");
+data1 = f.read();
+puts data1 == data;
+out = STDIN;
+c = "";
+c = out.getc();
+puts c;
+
+
 
 
 
