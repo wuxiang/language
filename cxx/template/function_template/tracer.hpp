@@ -81,7 +81,7 @@ class SortTracer
         }
 
         // comparison
-        friend bool operator < (const SotrTracer& a, const SortTracer& b)
+        friend bool operator < (const SortTracer& a, const SortTracer& b)
         {
             ++n_compared;
             std::cerr << "SortTracer comparison #" << n_compared << " (generation" << a.generation \
