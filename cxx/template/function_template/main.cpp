@@ -5,6 +5,9 @@
 #include <iterator>
 #include "max.hpp"
 #include "Stack.hpp"
+#include "tracer.hpp"
+#include <boost/lambda/lambda.hpp>
+#include <boost/foreach.hpp>
 //#include "nested_template.hpp"
 
 int main()
@@ -18,6 +21,7 @@ int main()
     //std::cout << s_max<>('a', 'b') << std::endl;
     //std::cout << s_max('a', 42.78) << std::endl;
     std::vector<int>  s(10, 8);
+    std::for_each(s.begin(), std::cout << '_1' << std::endl);
     std::vector<int>  d(10);
     std::transform(s.begin(), s.end(), d.begin(), addValue<int,8>);
     std::cout << d[0] << "," << d[9] << std::endl;
