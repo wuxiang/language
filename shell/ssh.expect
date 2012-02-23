@@ -1,0 +1,23 @@
+#!/usr/bin/expect
+set timeout 60
+set host 192.168.1.19
+set name elison
+set password elison
+spawn ssh $host -l $name
+
+expect {
+    "(yes/no)?" {
+        send "yes\n"
+        expect "password:"
+        send "$password\n"
+    }
+    "password:" {
+        send "$password\n"
+    }
+}
+expect "#"
+
+send "uname\n"
+expect "Linux"
+send_user "now you can work\n"
+Interact
