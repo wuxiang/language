@@ -1,0 +1,1 @@
+/usr/bin/c++      CMakeFiles/animal_test.dir/animal_test.cpp.o  -o animal_test -rdynamic liboopl.a 

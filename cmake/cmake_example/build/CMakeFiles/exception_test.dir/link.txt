@@ -1,0 +1,1 @@
+/usr/bin/c++      CMakeFiles/exception_test.dir/exception_test.cpp.o  -o exception_test -rdynamic liboopl.a 

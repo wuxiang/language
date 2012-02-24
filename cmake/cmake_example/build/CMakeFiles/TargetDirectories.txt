@@ -1,0 +1,8 @@
+/home/wuxiang/language/cmake/cmake_example/build/CMakeFiles/animal_test.dir
+/home/wuxiang/language/cmake/cmake_example/build/CMakeFiles/exception_test.dir
+/home/wuxiang/language/cmake/cmake_example/build/CMakeFiles/oop.dir
+/home/wuxiang/language/cmake/cmake_example/build/CMakeFiles/oopl.dir
+/home/wuxiang/language/cmake/cmake_example/build/CMakeFiles/plant_test.dir
+/home/wuxiang/language/cmake/cmake_example/build/CMakeFiles/tests_wo_exceptions_test.dir
+/home/wuxiang/language/cmake/cmake_example/build/CMakeFiles/time_test.dir
+/home/wuxiang/language/cmake/cmake_example/build/CMakeFiles/unit_tests.dir

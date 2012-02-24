@@ -1,0 +1,438 @@
+!_TAG_FILE_FORMAT	2	/extended format; --format=1 will not append ;" to lines/
+!_TAG_FILE_SORTED	1	/0=unsorted, 1=sorted, 2=foldcase/
+!_TAG_PROGRAM_AUTHOR	Darren Hiebert	/dhiebert@users.sourceforge.net/
+!_TAG_PROGRAM_NAME	Exuberant Ctags	//
+!_TAG_PROGRAM_URL	http://ctags.sourceforge.net	/official site/
+!_TAG_PROGRAM_VERSION	5.8	//
+ARRAY	barrier_main.c	12;"	d	file:
+BARRIER_INITIALIZER	barrier.h	33;"	d
+BARRIER_VALID	barrier.h	28;"	d
+CFLAGS	Makefile	/^CFLAGS=-std1 -pthread -g -w1 $(DEBUGFLAGS)$/;"	m
+CLIENT_THREADS	server.c	14;"	d	file:
+CREW_SIZE	crew.c	18;"	d	file:
+DATASIZE	rwlock_main.c	15;"	d	file:
+DATASIZE	rwlock_try_main.c	16;"	d	file:
+DPRINTF	errors.h	17;"	d
+DPRINTF	errors.h	19;"	d
+INLOOPS	barrier_main.c	13;"	d	file:
+ITERATIONS	backoff.c	15;"	d	file:
+ITERATIONS	rwlock_main.c	16;"	d	file:
+ITERATIONS	rwlock_try_main.c	15;"	d	file:
+ITERATIONS	susp.c	30;"	d	file:
+ITERATIONS	workq_main.c	13;"	d	file:
+LOGIN_NAME_MAX	getlogin.c	20;"	d	file:
+OUTLOOPS	barrier_main.c	14;"	d	file:
+PROGRAMS	Makefile	/^PROGRAMS=$(SOURCES:.c=)$/;"	m
+REQ_QUIT	server.c	18;"	d	file:
+REQ_READ	server.c	16;"	d	file:
+REQ_WRITE	server.c	17;"	d	file:
+RTFLAGS	Makefile	/^RTFLAGS=-lrt$/;"	m
+RWLOCK_VALID	rwlock.h	30;"	d
+RWL_INITIALIZER	rwlock.h	35;"	d
+SIZE	cancel_async.c	14;"	d	file:
+SOURCES	Makefile	/^SOURCES=alarm.c	alarm_cond.c	alarm_fork.c	alarm_mutex.c	\\$/;"	m
+SPIN	trylock.c	17;"	d	file:
+THREADS	barrier_main.c	11;"	d	file:
+THREADS	cancel_cleanup.c	10;"	d	file:
+THREADS	cancel_subcontract.c	15;"	d	file:
+THREADS	rwlock_main.c	14;"	d	file:
+THREADS	rwlock_try_main.c	14;"	d	file:
+THREADS	sched_thread.c	14;"	d	file:
+THREAD_COUNT	susp.c	29;"	d	file:
+TTY_NAME_MAX	getlogin.c	17;"	d	file:
+WORKQ_VALID	workq.h	49;"	d
+__errors_h	errors.h	2;"	d
+active	pipe.c	/^    int                 active;         \/* Active data elements *\/$/;"	m	struct:pipe_tag	file:
+alarm_cond	alarm_cond.c	/^pthread_cond_t alarm_cond = PTHREAD_COND_INITIALIZER;$/;"	v
+alarm_insert	alarm_cond.c	/^void alarm_insert (alarm_t *alarm)$/;"	f
+alarm_list	alarm_cond.c	/^alarm_t *alarm_list = NULL;$/;"	v
+alarm_list	alarm_mutex.c	/^alarm_t *alarm_list = NULL;$/;"	v
+alarm_mutex	alarm_cond.c	/^pthread_mutex_t alarm_mutex = PTHREAD_MUTEX_INITIALIZER;$/;"	v
+alarm_mutex	alarm_mutex.c	/^pthread_mutex_t alarm_mutex = PTHREAD_MUTEX_INITIALIZER;$/;"	v
+alarm_t	alarm_cond.c	/^} alarm_t;$/;"	t	typeref:struct:alarm_tag	file:
+alarm_t	alarm_mutex.c	/^} alarm_t;$/;"	t	typeref:struct:alarm_tag	file:
+alarm_t	alarm_thread.c	/^} alarm_t;$/;"	t	typeref:struct:alarm_tag	file:
+alarm_tag	alarm_cond.c	/^typedef struct alarm_tag {$/;"	s	file:
+alarm_tag	alarm_mutex.c	/^typedef struct alarm_tag {$/;"	s	file:
+alarm_tag	alarm_thread.c	/^typedef struct alarm_tag {$/;"	s	file:
+alarm_thread	alarm_cond.c	/^void *alarm_thread (void *arg)$/;"	f
+alarm_thread	alarm_mutex.c	/^void *alarm_thread (void *arg)$/;"	f
+alarm_thread	alarm_thread.c	/^void *alarm_thread (void *arg)$/;"	f
+array	barrier_main.c	/^    int         array[ARRAY];$/;"	m	struct:thread_tag	file:
+array	susp.c	/^pthread_t *array = NULL, null_pthread = {0};$/;"	v
+attr	workq.h	/^    pthread_attr_t      attr;           \/* create detached threads *\/$/;"	m	struct:workq_tag
+avail	pipe.c	/^    pthread_cond_t      avail;          \/* Data available *\/$/;"	m	struct:stage_tag	file:
+backoff	backoff.c	/^int backoff = 1;        \/* Whether to backoff or deadlock *\/$/;"	v
+barrier	barrier_main.c	/^barrier_t barrier;$/;"	v
+barrier_destroy	barrier.c	/^int barrier_destroy (barrier_t *barrier)$/;"	f
+barrier_init	barrier.c	/^int barrier_init (barrier_t *barrier, int count)$/;"	f
+barrier_t	barrier.h	/^} barrier_t;$/;"	t	typeref:struct:barrier_tag
+barrier_tag	barrier.h	/^typedef struct barrier_tag {$/;"	s
+barrier_wait	barrier.c	/^int barrier_wait (barrier_t *barrier)$/;"	f
+bottom	susp.c	/^int bottom = 0;$/;"	v
+busy	cancel_cleanup.c	/^    int                 counter, busy;$/;"	m	struct:control_tag	file:
+calls	workq_main.c	/^    int                 calls;$/;"	m	struct:engine_tag	file:
+cleanup	cancel_subcontract.c	/^void cleanup (void *arg)$/;"	f
+cleanup_handler	cancel_cleanup.c	/^void cleanup_handler (void *arg)$/;"	f
+client_mutex	server.c	/^pthread_mutex_t client_mutex = PTHREAD_MUTEX_INITIALIZER;$/;"	v
+client_routine	server.c	/^void *client_routine (void *arg)$/;"	f
+client_threads	server.c	/^int client_threads;$/;"	v
+clients_done	server.c	/^pthread_cond_t clients_done = PTHREAD_COND_INITIALIZER;$/;"	v
+cond	cond.c	/^    pthread_cond_t      cond;   \/* Signals change to value *\/$/;"	m	struct:my_struct_tag	file:
+cond	cond_attr.c	/^pthread_cond_t cond;$/;"	v
+cond	cond_dynamic.c	/^    pthread_cond_t      cond;   \/* Signals change to value *\/$/;"	m	struct:my_struct_tag	file:
+cond	cond_static.c	/^    pthread_cond_t      cond;   \/* Signals change to value *\/$/;"	m	struct:my_struct_tag	file:
+cond	sigev_thread.c	/^pthread_cond_t cond = PTHREAD_COND_INITIALIZER;$/;"	v
+cond	sigwait.c	/^pthread_cond_t cond = PTHREAD_COND_INITIALIZER;$/;"	v
+control	cancel_cleanup.c	/^control_t control =$/;"	v
+control_t	cancel_cleanup.c	/^} control_t;$/;"	t	typeref:struct:control_tag	file:
+control_tag	cancel_cleanup.c	/^typedef struct control_tag {$/;"	s	file:
+counter	barrier.h	/^    int                 counter;        \/* current number of threads *\/$/;"	m	struct:barrier_tag
+counter	cancel.c	/^static int counter;$/;"	v	file:
+counter	cancel_cleanup.c	/^    int                 counter, busy;$/;"	m	struct:control_tag	file:
+counter	cancel_disable.c	/^static int counter;$/;"	v	file:
+counter	sigev_thread.c	/^int counter = 0;$/;"	v
+counter	trylock.c	/^long counter;$/;"	v
+counter	workq.h	/^    int                 counter;        \/* current number of threads *\/$/;"	m	struct:workq_tag
+counter_thread	trylock.c	/^void *counter_thread (void *arg)$/;"	f
+crew	crew.c	/^    struct crew_tag     *crew;          \/* Pointer to crew *\/$/;"	m	struct:worker_tag	typeref:struct:worker_tag::crew_tag	file:
+crew	crew.c	/^    worker_t            crew[CREW_SIZE];\/* Crew members *\/$/;"	m	struct:crew_tag	file:
+crew_create	crew.c	/^int crew_create (crew_t *crew, int crew_size)$/;"	f
+crew_p	crew.c	/^} crew_t, *crew_p;$/;"	t	typeref:struct:crew_tag	file:
+crew_size	crew.c	/^    int                 crew_size;      \/* Size of array *\/$/;"	m	struct:crew_tag	file:
+crew_start	crew.c	/^int crew_start ($/;"	f
+crew_t	crew.c	/^} crew_t, *crew_p;$/;"	t	typeref:struct:crew_tag	file:
+crew_tag	crew.c	/^typedef struct crew_tag {$/;"	s	file:
+current_alarm	alarm_cond.c	/^time_t current_alarm = 0;$/;"	v
+cv	barrier.h	/^    pthread_cond_t      cv;             \/* wait for barrier *\/$/;"	m	struct:barrier_tag
+cv	cancel_cleanup.c	/^    pthread_cond_t      cv;$/;"	m	struct:control_tag	file:
+cv	workq.h	/^    pthread_cond_t      cv;             \/* wait for work *\/$/;"	m	struct:workq_tag
+cycle	barrier.h	/^    int                 cycle;          \/* alternate wait cycles (0 or 1) *\/$/;"	m	struct:barrier_tag
+data	cond.c	/^my_struct_t data = {$/;"	v
+data	cond_static.c	/^my_struct_t data = {$/;"	v
+data	mutex_static.c	/^my_struct_t data = {PTHREAD_MUTEX_INITIALIZER, 0};$/;"	v
+data	pipe.c	/^    long                data;           \/* Data to process *\/$/;"	m	struct:stage_tag	file:
+data	rwlock_main.c	/^    int         data;$/;"	m	struct:data_tag	file:
+data	rwlock_main.c	/^data_t data[DATASIZE];$/;"	v
+data	rwlock_try_main.c	/^    int         data;$/;"	m	struct:data_tag	file:
+data	rwlock_try_main.c	/^data_t data[DATASIZE];$/;"	v
+data	workq.h	/^    void                        *data;$/;"	m	struct:workq_ele_tag
+data_ready	pipe.c	/^    int                 data_ready;     \/* Data present *\/$/;"	m	struct:stage_tag	file:
+data_t	rwlock_main.c	/^} data_t;$/;"	t	typeref:struct:data_tag	file:
+data_t	rwlock_try_main.c	/^} data_t;$/;"	t	typeref:struct:data_tag	file:
+data_tag	rwlock_main.c	/^typedef struct data_tag {$/;"	s	file:
+data_tag	rwlock_try_main.c	/^typedef struct data_tag {$/;"	s	file:
+destructor	workq_main.c	/^void destructor (void *value_ptr)$/;"	f
+done	crew.c	/^    pthread_cond_t      done;           \/* Wait for crew done *\/$/;"	m	struct:crew_tag	file:
+done	server.c	/^    pthread_cond_t      done;           \/* Wait for completion *\/$/;"	m	struct:request_tag	file:
+done_flag	server.c	/^    int                 done_flag;      \/* Predicate for wait *\/$/;"	m	struct:request_tag	file:
+end_time	trylock.c	/^time_t end_time;$/;"	v
+engine	workq.h	/^    void                (*engine)(void *arg);   \/* user engine *\/$/;"	m	struct:workq_tag
+engine_key	workq_main.c	/^pthread_key_t engine_key;       \/* Keep track of active engines *\/$/;"	v
+engine_list_head	workq_main.c	/^engine_t *engine_list_head = NULL;$/;"	v
+engine_list_mutex	workq_main.c	/^pthread_mutex_t engine_list_mutex = PTHREAD_MUTEX_INITIALIZER;$/;"	v
+engine_routine	workq_main.c	/^void engine_routine (void *arg)$/;"	f
+engine_t	workq_main.c	/^} engine_t;$/;"	t	typeref:struct:engine_tag	file:
+engine_tag	workq_main.c	/^typedef struct engine_tag {$/;"	s	file:
+err_abort	errors.h	38;"	d
+errno_abort	errors.h	43;"	d
+first	crew.c	/^    work_t              *first, *last;  \/* First & last work item *\/$/;"	m	struct:crew_tag	file:
+first	server.c	/^    request_t           *first;$/;"	m	struct:tty_server_tag	file:
+first	workq.h	/^    workq_ele_t         *first, *last;  \/* work queue *\/$/;"	m	struct:workq_tag
+fork_child	atfork.c	/^void fork_child (void)$/;"	f
+fork_parent	atfork.c	/^void fork_parent (void)$/;"	f
+fork_prepare	atfork.c	/^void fork_prepare (void)$/;"	f
+go	crew.c	/^    pthread_cond_t      go;             \/* Wait for work *\/$/;"	m	struct:crew_tag	file:
+head	pipe.c	/^    stage_t             *head;          \/* First stage *\/$/;"	m	struct:pipe_tag	file:
+hello_world	hello.c	/^void *hello_world (void *arg)$/;"	f
+hibernation	cond.c	/^int hibernation = 1;            \/* Default to 1 second *\/$/;"	v
+id	sched_thread.c	/^    pthread_t   id;$/;"	m	struct:thread_tag	file:
+identity_key	tsd_destructor.c	/^pthread_key_t identity_key;         \/* Thread-specific data key *\/$/;"	v
+identity_key_counter	tsd_destructor.c	/^long identity_key_counter = 0;$/;"	v
+identity_key_destructor	tsd_destructor.c	/^void identity_key_destructor (void *value)$/;"	f
+identity_key_get	tsd_destructor.c	/^void *identity_key_get (void)$/;"	f
+identity_key_mutex	tsd_destructor.c	/^pthread_mutex_t identity_key_mutex = PTHREAD_MUTEX_INITIALIZER;$/;"	v
+idle	workq.h	/^    int                 idle;           \/* number of idle threads *\/$/;"	m	struct:workq_tag
+increment	barrier_main.c	/^    int         increment;$/;"	m	struct:thread_tag	file:
+index	crew.c	/^    int                 index;          \/* Thread's index *\/$/;"	m	struct:worker_tag	file:
+index	sched_thread.c	/^    int         index;$/;"	m	struct:thread_tag	file:
+inited	susp.c	/^int inited = 0;$/;"	v
+interrupted	sigwait.c	/^int interrupted = 0;$/;"	v
+interval	rwlock_main.c	/^    int         interval;$/;"	m	struct:thread_tag	file:
+interval	rwlock_try_main.c	/^    int         interval;$/;"	m	struct:thread_tag	file:
+iterations	susp.c	/^unsigned long iterations = ITERATIONS;$/;"	v
+join_i	cancel_subcontract.c	/^   int          join_i;                 \/* join index *\/$/;"	m	struct:team_tag	file:
+key_once	tsd_once.c	/^pthread_once_t key_once = PTHREAD_ONCE_INIT;$/;"	v
+last	crew.c	/^    work_t              *first, *last;  \/* First & last work item *\/$/;"	m	struct:crew_tag	file:
+last	server.c	/^    request_t           *last;$/;"	m	struct:tty_server_tag	file:
+last	workq.h	/^    workq_ele_t         *first, *last;  \/* work queue *\/$/;"	m	struct:workq_tag
+link	alarm_cond.c	/^    struct alarm_tag    *link;$/;"	m	struct:alarm_tag	typeref:struct:alarm_tag::alarm_tag	file:
+link	alarm_mutex.c	/^    struct alarm_tag    *link;$/;"	m	struct:alarm_tag	typeref:struct:alarm_tag::alarm_tag	file:
+link	workq_main.c	/^    struct engine_tag   *link;$/;"	m	struct:engine_tag	typeref:struct:engine_tag::engine_tag	file:
+lock	rwlock_main.c	/^    rwlock_t    lock;$/;"	m	struct:data_tag	file:
+lock	rwlock_try_main.c	/^    rwlock_t    lock;$/;"	m	struct:data_tag	file:
+lock_backward	backoff.c	/^void *lock_backward (void *arg)$/;"	f
+lock_forward	backoff.c	/^void *lock_forward (void *arg)$/;"	f
+lock_routine	putchar.c	/^void *lock_routine (void *arg)$/;"	f
+main	alarm.c	/^int main (int argc, char *argv[])$/;"	f
+main	alarm_cond.c	/^int main (int argc, char *argv[])$/;"	f
+main	alarm_fork.c	/^int main (int argc, char *argv[])$/;"	f
+main	alarm_mutex.c	/^int main (int argc, char *argv[])$/;"	f
+main	alarm_thread.c	/^int main (int argc, char *argv[])$/;"	f
+main	atfork.c	/^int main (int argc, char *argv[])$/;"	f
+main	backoff.c	/^int main (int argc, char *argv[])$/;"	f
+main	barrier_main.c	/^int main (int arg, char *argv[])$/;"	f
+main	cancel.c	/^int main (int argc, char *argv[])$/;"	f
+main	cancel_async.c	/^int main (int argc, char *argv[])$/;"	f
+main	cancel_cleanup.c	/^int main (int argc, char *argv[])$/;"	f
+main	cancel_disable.c	/^int main (int argc, char *argv[])$/;"	f
+main	cancel_subcontract.c	/^int main (int argc, char *argv[])$/;"	f
+main	cond.c	/^int main (int argc, char *argv[])$/;"	f
+main	cond_attr.c	/^int main (int argc, char *argv[])$/;"	f
+main	cond_dynamic.c	/^int main (int argc, char *argv[])$/;"	f
+main	cond_static.c	/^int main (int argc, char *argv[])$/;"	f
+main	crew.c	/^int main (int argc, char *argv[])$/;"	f
+main	flock.c	/^int main (int argc, char *argv[])$/;"	f
+main	getlogin.c	/^int main (int argc, char *argv[])$/;"	f
+main	hello.c	/^int main (int argc, char *argv[])$/;"	f
+main	inertia.c	/^int main (int argc, char *argv[])$/;"	f
+main	lifecycle.c	/^main (int argc, char *argv[])$/;"	f
+main	mutex_attr.c	/^int main (int argc, char *argv[])$/;"	f
+main	mutex_dynamic.c	/^int main (int argc, char *argv[])$/;"	f
+main	mutex_static.c	/^int main (int argc, char *argv[])$/;"	f
+main	once.c	/^int main (int argc, char *argv[])$/;"	f
+main	pipe.c	/^int main (int argc, char *argv[])$/;"	f
+main	putchar.c	/^int main (int argc, char *argv[])$/;"	f
+main	rwlock_main.c	/^int main (int argc, char *argv[])$/;"	f
+main	rwlock_try_main.c	/^int main (int argc, char *argv[])$/;"	f
+main	sched_attr.c	/^int main (int argc, char *argv[])$/;"	f
+main	sched_thread.c	/^int main (int argc, char *argv[])$/;"	f
+main	semaphore_signal.c	/^int main (int argc, char *argv[])$/;"	f
+main	semaphore_wait.c	/^int main (int argc, char *argv[])$/;"	f
+main	server.c	/^int main (int argc, char *argv[])$/;"	f
+main	sigev_thread.c	/^main()$/;"	f
+main	sigwait.c	/^int main (int argc, char *argv[])$/;"	f
+main	susp.c	/^main (int argc, char *argv[])$/;"	f
+main	thread.c	/^int main (int argc, char *argv[])$/;"	f
+main	thread_attr.c	/^int main (int argc, char *argv[])$/;"	f
+main	thread_error.c	/^int main (int argc, char *argv[])$/;"	f
+main	trylock.c	/^int main (int argc, char *argv[])$/;"	f
+main	tsd_destructor.c	/^void main (int argc, char *argv[])$/;"	f
+main	tsd_once.c	/^void main (int argc, char *argv[])$/;"	f
+main	workq_main.c	/^int main (int argc, char *argv[])$/;"	f
+matrixa	cancel_async.c	/^static int matrixa[SIZE][SIZE];$/;"	v	file:
+matrixb	cancel_async.c	/^static int matrixb[SIZE][SIZE];$/;"	v	file:
+matrixc	cancel_async.c	/^static int matrixc[SIZE][SIZE];$/;"	v	file:
+message	alarm_cond.c	/^    char                message[64];$/;"	m	struct:alarm_tag	file:
+message	alarm_mutex.c	/^    char                message[64];$/;"	m	struct:alarm_tag	file:
+message	alarm_thread.c	/^    char        message[64];$/;"	m	struct:alarm_tag	file:
+monitor_thread	trylock.c	/^void *monitor_thread (void *arg)$/;"	f
+mut	susp.c	/^pthread_mutex_t mut = PTHREAD_MUTEX_INITIALIZER;$/;"	v
+mutex	atfork.c	/^pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;$/;"	v
+mutex	backoff.c	/^pthread_mutex_t mutex[3] = {$/;"	v
+mutex	barrier.h	/^    pthread_mutex_t     mutex;          \/* Control access to barrier *\/$/;"	m	struct:barrier_tag
+mutex	cancel_cleanup.c	/^    pthread_mutex_t     mutex;$/;"	m	struct:control_tag	file:
+mutex	cond.c	/^    pthread_mutex_t     mutex;  \/* Protects access to value *\/$/;"	m	struct:my_struct_tag	file:
+mutex	cond_dynamic.c	/^    pthread_mutex_t     mutex;  \/* Protects access to value *\/$/;"	m	struct:my_struct_tag	file:
+mutex	cond_static.c	/^    pthread_mutex_t     mutex;  \/* Protects access to value *\/$/;"	m	struct:my_struct_tag	file:
+mutex	crew.c	/^    pthread_mutex_t     mutex;          \/* Mutex for crew data *\/$/;"	m	struct:crew_tag	file:
+mutex	mutex_attr.c	/^pthread_mutex_t mutex;$/;"	v
+mutex	mutex_dynamic.c	/^    pthread_mutex_t     mutex;  \/* Protects access to value *\/$/;"	m	struct:my_struct_tag	file:
+mutex	mutex_static.c	/^    pthread_mutex_t     mutex;  \/* Protects access to value *\/$/;"	m	struct:my_struct_tag	file:
+mutex	once.c	/^pthread_mutex_t mutex;$/;"	v
+mutex	pipe.c	/^    pthread_mutex_t     mutex;          \/* Mutex to protect pipe *\/$/;"	m	struct:pipe_tag	file:
+mutex	pipe.c	/^    pthread_mutex_t     mutex;          \/* Protect data *\/$/;"	m	struct:stage_tag	file:
+mutex	rwlock.h	/^    pthread_mutex_t     mutex;$/;"	m	struct:rwlock_tag
+mutex	server.c	/^    pthread_mutex_t     mutex;$/;"	m	struct:tty_server_tag	file:
+mutex	sigev_thread.c	/^pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;$/;"	v
+mutex	sigwait.c	/^pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;$/;"	v
+mutex	trylock.c	/^pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;$/;"	v
+mutex	workq.h	/^    pthread_mutex_t     mutex;$/;"	m	struct:workq_tag
+my_struct_t	cond.c	/^} my_struct_t;$/;"	t	typeref:struct:my_struct_tag	file:
+my_struct_t	cond_dynamic.c	/^} my_struct_t;$/;"	t	typeref:struct:my_struct_tag	file:
+my_struct_t	cond_static.c	/^} my_struct_t;$/;"	t	typeref:struct:my_struct_tag	file:
+my_struct_t	mutex_dynamic.c	/^} my_struct_t;$/;"	t	typeref:struct:my_struct_tag	file:
+my_struct_t	mutex_static.c	/^} my_struct_t;$/;"	t	typeref:struct:my_struct_tag	file:
+my_struct_tag	cond.c	/^typedef struct my_struct_tag {$/;"	s	file:
+my_struct_tag	cond_dynamic.c	/^typedef struct my_struct_tag {$/;"	s	file:
+my_struct_tag	cond_static.c	/^typedef struct my_struct_tag {$/;"	s	file:
+my_struct_tag	mutex_dynamic.c	/^typedef struct my_struct_tag {$/;"	s	file:
+my_struct_tag	mutex_static.c	/^typedef struct my_struct_tag {$/;"	s	file:
+name_max	crew.c	/^size_t  name_max;                       \/* Name length *\/$/;"	v
+next	crew.c	/^    struct work_tag     *next;          \/* Next work item *\/$/;"	m	struct:work_tag	typeref:struct:work_tag::work_tag	file:
+next	pipe.c	/^    struct stage_tag    *next;          \/* Next stage *\/$/;"	m	struct:stage_tag	typeref:struct:stage_tag::stage_tag	file:
+next	server.c	/^    struct request_tag  *next;          \/* Link to next *\/$/;"	m	struct:request_tag	typeref:struct:request_tag::request_tag	file:
+next	workq.h	/^    struct workq_ele_tag        *next;$/;"	m	struct:workq_ele_tag	typeref:struct:workq_ele_tag::workq_ele_tag
+null_pthread	susp.c	/^pthread_t *array = NULL, null_pthread = {0};$/;"	v
+number	barrier_main.c	/^    int         number;$/;"	m	struct:thread_tag	file:
+once	susp.c	/^pthread_once_t once = PTHREAD_ONCE_INIT;$/;"	v
+once_block	once.c	/^pthread_once_t once_block = PTHREAD_ONCE_INIT;$/;"	v
+once_init_routine	once.c	/^void once_init_routine (void)$/;"	f
+once_routine	tsd_once.c	/^void once_routine (void)$/;"	f
+operation	server.c	/^    int                 operation;      \/* Function code *\/$/;"	m	struct:request_tag	file:
+parallelism	workq.h	/^    int                 parallelism;    \/* number of threads required *\/$/;"	m	struct:workq_tag
+path	crew.c	/^    char                *path; \/* Directory or file *\/$/;"	m	struct:work_tag	file:
+path_max	crew.c	/^size_t  path_max;                       \/* Filepath length *\/$/;"	v
+pipe_create	pipe.c	/^int pipe_create (pipe_t *pipe, int stages)$/;"	f
+pipe_result	pipe.c	/^int pipe_result (pipe_t *pipe, long *result)$/;"	f
+pipe_send	pipe.c	/^int pipe_send (stage_t *stage, long data)$/;"	f
+pipe_stage	pipe.c	/^void *pipe_stage (void *arg)$/;"	f
+pipe_start	pipe.c	/^int pipe_start (pipe_t *pipe, long value)$/;"	f
+pipe_t	pipe.c	/^} pipe_t;$/;"	t	typeref:struct:pipe_tag	file:
+pipe_tag	pipe.c	/^typedef struct pipe_tag {$/;"	s	file:
+power	workq_main.c	/^    int         power;$/;"	m	struct:power_tag	file:
+power_t	workq_main.c	/^} power_t;$/;"	t	typeref:struct:power_tag	file:
+power_tag	workq_main.c	/^typedef struct power_tag {$/;"	s	file:
+print_array	cancel_async.c	/^void print_array (int matrix[SIZE][SIZE])$/;"	f
+printer_thread	inertia.c	/^void *printer_thread (void *arg)$/;"	f
+private_t	tsd_destructor.c	/^} private_t;$/;"	t	typeref:struct:private_tag	file:
+private_tag	tsd_destructor.c	/^typedef struct private_tag {$/;"	s	file:
+prompt	server.c	/^    char                prompt[32];     \/* Prompt string for reads *\/$/;"	m	struct:request_tag	file:
+prompt_routine	flock.c	/^void *prompt_routine (void *arg)$/;"	f
+quit	workq.h	/^    int                 quit;           \/* set when workq should quit *\/$/;"	m	struct:workq_tag
+r_active	rwlock.h	/^    int                 r_active;       \/* readers active *\/$/;"	m	struct:rwlock_tag
+r_collisions	rwlock_try_main.c	/^    int         r_collisions;$/;"	m	struct:thread_tag	file:
+r_wait	rwlock.h	/^    int                 r_wait;         \/* readers waiting *\/$/;"	m	struct:rwlock_tag
+read	rwlock.h	/^    pthread_cond_t      read;           \/* wait for read *\/$/;"	m	struct:rwlock_tag
+reads	rwlock_main.c	/^    int         reads;$/;"	m	struct:thread_tag	file:
+ready	pipe.c	/^    pthread_cond_t      ready;          \/* Ready for data *\/$/;"	m	struct:stage_tag	file:
+request	server.c	/^    pthread_cond_t      request;$/;"	m	struct:tty_server_tag	file:
+request_t	server.c	/^} request_t;$/;"	t	typeref:struct:request_tag	file:
+request_tag	server.c	/^typedef struct request_tag {$/;"	s	file:
+resume_signal_handler	susp.c	/^resume_signal_handler (int sig)$/;"	f
+rr_min_priority	sched_thread.c	/^int             rr_min_priority;$/;"	v
+running	server.c	/^    int                 running;$/;"	m	struct:tty_server_tag	file:
+rwl_destroy	rwlock.c	/^int rwl_destroy (rwlock_t *rwl)$/;"	f
+rwl_init	rwlock.c	/^int rwl_init (rwlock_t *rwl)$/;"	f
+rwl_readcleanup	rwlock.c	/^static void rwl_readcleanup (void *arg)$/;"	f	file:
+rwl_readlock	rwlock.c	/^int rwl_readlock (rwlock_t *rwl)$/;"	f
+rwl_readtrylock	rwlock.c	/^int rwl_readtrylock (rwlock_t *rwl)$/;"	f
+rwl_readunlock	rwlock.c	/^int rwl_readunlock (rwlock_t *rwl)$/;"	f
+rwl_writecleanup	rwlock.c	/^static void rwl_writecleanup (void *arg)$/;"	f	file:
+rwl_writelock	rwlock.c	/^int rwl_writelock (rwlock_t *rwl)$/;"	f
+rwl_writetrylock	rwlock.c	/^int rwl_writetrylock (rwlock_t *rwl)$/;"	f
+rwl_writeunlock	rwlock.c	/^int rwl_writeunlock (rwlock_t *rwl)$/;"	f
+rwlock_t	rwlock.h	/^} rwlock_t;$/;"	t	typeref:struct:rwlock_tag
+rwlock_tag	rwlock.h	/^typedef struct rwlock_tag {$/;"	s
+seconds	alarm_cond.c	/^    int                 seconds;$/;"	m	struct:alarm_tag	file:
+seconds	alarm_mutex.c	/^    int                 seconds;$/;"	m	struct:alarm_tag	file:
+seconds	alarm_thread.c	/^    int         seconds;$/;"	m	struct:alarm_tag	file:
+self_pid	atfork.c	/^pid_t self_pid;                         \/* pid of current process *\/$/;"	v
+sem_waiter	semaphore_signal.c	/^void *sem_waiter (void *arg)$/;"	f
+sem_waiter	semaphore_wait.c	/^void *sem_waiter (void *arg)$/;"	f
+semaphore	semaphore_signal.c	/^sem_t   semaphore;$/;"	v
+semaphore	semaphore_wait.c	/^sem_t semaphore;$/;"	v
+sentinel	susp.c	/^volatile int sentinel = 0;$/;"	v
+signal_catcher	semaphore_signal.c	/^void signal_catcher (int sig)$/;"	f
+signal_set	sigwait.c	/^sigset_t signal_set;$/;"	v
+signal_waiter	sigwait.c	/^void *signal_waiter (void *arg)$/;"	f
+stage_t	pipe.c	/^} stage_t;$/;"	t	typeref:struct:stage_tag	file:
+stage_tag	pipe.c	/^typedef struct stage_tag {$/;"	s	file:
+stages	pipe.c	/^    int                 stages;         \/* Number of stages *\/$/;"	m	struct:pipe_tag	file:
+string	crew.c	/^    char                *string;        \/* Search string *\/$/;"	m	struct:work_tag	file:
+string	tsd_destructor.c	/^    char        *string;$/;"	m	struct:private_tag	file:
+string	tsd_once.c	/^    char        *string;$/;"	m	struct:tsd_tag	file:
+suspend_init_routine	susp.c	/^suspend_init_routine (void)$/;"	f
+suspend_signal_handler	susp.c	/^suspend_signal_handler (int sig)$/;"	f
+synchronous	server.c	/^    int                 synchronous;    \/* Non-zero if synchronous *\/$/;"	m	struct:request_tag	file:
+tail	pipe.c	/^    stage_t             *tail;          \/* Final stage *\/$/;"	m	struct:pipe_tag	file:
+team_t	cancel_subcontract.c	/^} team_t;$/;"	t	typeref:struct:team_tag	file:
+team_tag	cancel_subcontract.c	/^typedef struct team_tag {$/;"	s	file:
+text	server.c	/^    char                text[128];      \/* Read\/write text *\/$/;"	m	struct:request_tag	file:
+thd_continue	susp.c	/^thd_continue (pthread_t target_thread)$/;"	f
+thd_suspend	susp.c	/^thd_suspend (pthread_t target_thread)$/;"	f
+the_mutex	susp.c	/^pthread_mutex_t the_mutex = PTHREAD_MUTEX_INITIALIZER;$/;"	v
+thread	barrier_main.c	/^thread_t thread[THREADS];$/;"	v
+thread	crew.c	/^    pthread_t           thread;         \/* Thread for stage *\/$/;"	m	struct:worker_tag	file:
+thread	pipe.c	/^    pthread_t           thread;         \/* Thread for stage *\/$/;"	m	struct:stage_tag	file:
+thread_count	susp.c	/^unsigned long thread_count = THREAD_COUNT;$/;"	v
+thread_id	barrier_main.c	/^    pthread_t   thread_id;$/;"	m	struct:thread_tag	file:
+thread_id	rwlock_main.c	/^    pthread_t   thread_id;$/;"	m	struct:thread_tag	file:
+thread_id	rwlock_try_main.c	/^    pthread_t   thread_id;$/;"	m	struct:thread_tag	file:
+thread_id	tsd_destructor.c	/^    pthread_t   thread_id;$/;"	m	struct:private_tag	file:
+thread_id	tsd_once.c	/^    pthread_t   thread_id;$/;"	m	struct:tsd_tag	file:
+thread_id	workq_main.c	/^    pthread_t           thread_id;$/;"	m	struct:engine_tag	file:
+thread_num	rwlock_main.c	/^    int         thread_num;$/;"	m	struct:thread_tag	file:
+thread_num	rwlock_try_main.c	/^    int         thread_num;$/;"	m	struct:thread_tag	file:
+thread_routine	atfork.c	/^void *thread_routine (void *arg)$/;"	f
+thread_routine	barrier_main.c	/^void *thread_routine (void *arg)$/;"	f
+thread_routine	cancel.c	/^void *thread_routine (void *arg)$/;"	f
+thread_routine	cancel_async.c	/^void *thread_routine (void *arg)$/;"	f
+thread_routine	cancel_cleanup.c	/^void *thread_routine (void *arg)$/;"	f
+thread_routine	cancel_disable.c	/^void *thread_routine (void *arg)$/;"	f
+thread_routine	cancel_subcontract.c	/^void *thread_routine (void *arg)$/;"	f
+thread_routine	lifecycle.c	/^void *thread_routine (void *arg)$/;"	f
+thread_routine	once.c	/^void *thread_routine (void *arg)$/;"	f
+thread_routine	rwlock_main.c	/^void *thread_routine (void *arg)$/;"	f
+thread_routine	rwlock_try_main.c	/^void *thread_routine (void *arg)$/;"	f
+thread_routine	sched_attr.c	/^void *thread_routine (void *arg)$/;"	f
+thread_routine	sched_thread.c	/^void *thread_routine (void *arg)$/;"	f
+thread_routine	susp.c	/^thread_routine (void *arg)$/;"	f	file:
+thread_routine	thread_attr.c	/^void *thread_routine (void *arg)$/;"	f
+thread_routine	tsd_destructor.c	/^void *thread_routine (void *arg)$/;"	f
+thread_routine	tsd_once.c	/^void *thread_routine (void *arg)$/;"	f
+thread_routine	workq_main.c	/^void *thread_routine (void *arg)$/;"	f
+thread_t	barrier_main.c	/^    } thread_t;$/;"	t	typeref:struct:thread_tag	file:
+thread_t	rwlock_main.c	/^} thread_t;$/;"	t	typeref:struct:thread_tag	file:
+thread_t	rwlock_try_main.c	/^} thread_t;$/;"	t	typeref:struct:thread_tag	file:
+thread_t	sched_thread.c	/^} thread_t;$/;"	t	typeref:struct:thread_tag	file:
+thread_tag	barrier_main.c	/^typedef struct thread_tag {$/;"	s	file:
+thread_tag	rwlock_main.c	/^typedef struct thread_tag {$/;"	s	file:
+thread_tag	rwlock_try_main.c	/^typedef struct thread_tag {$/;"	s	file:
+thread_tag	sched_thread.c	/^typedef struct thread_tag {$/;"	s	file:
+threads	rwlock_main.c	/^thread_t threads[THREADS];$/;"	v
+threads	rwlock_try_main.c	/^thread_t threads[THREADS];$/;"	v
+threads	sched_thread.c	/^thread_t        threads[THREADS];$/;"	v
+threshold	barrier.h	/^    int                 threshold;      \/* number of threads required *\/$/;"	m	struct:barrier_tag
+time	alarm_cond.c	/^    time_t              time;   \/* seconds from EPOCH *\/$/;"	m	struct:alarm_tag	file:
+time	alarm_mutex.c	/^    time_t              time;   \/* seconds from EPOCH *\/$/;"	m	struct:alarm_tag	file:
+timer_id	sigev_thread.c	/^timer_t timer_id;$/;"	v
+timer_thread	sigev_thread.c	/^timer_thread (void *arg)$/;"	f
+tsd_key	tsd_once.c	/^pthread_key_t tsd_key;           \/* Thread-specific data key *\/$/;"	v
+tsd_t	tsd_once.c	/^} tsd_t;$/;"	t	typeref:struct:tsd_tag	file:
+tsd_tag	tsd_once.c	/^typedef struct tsd_tag {$/;"	s	file:
+tty_server	server.c	/^tty_server_t tty_server = {$/;"	v
+tty_server_request	server.c	/^void tty_server_request ($/;"	f
+tty_server_routine	server.c	/^void *tty_server_routine (void *arg)$/;"	f
+tty_server_t	server.c	/^} tty_server_t;$/;"	t	typeref:struct:tty_server_tag	file:
+tty_server_tag	server.c	/^typedef struct tty_server_tag {$/;"	s	file:
+unlock_routine	putchar.c	/^void *unlock_routine (void *arg)$/;"	f
+updates	rwlock_main.c	/^    int         updates;$/;"	m	struct:data_tag	file:
+updates	rwlock_main.c	/^    int         updates;$/;"	m	struct:thread_tag	file:
+updates	rwlock_try_main.c	/^    int         updates;$/;"	m	struct:data_tag	file:
+updates	rwlock_try_main.c	/^    int         updates;$/;"	m	struct:thread_tag	file:
+valid	barrier.h	/^    int                 valid;          \/* set when valid *\/$/;"	m	struct:barrier_tag
+valid	rwlock.h	/^    int                 valid;          \/* set when valid *\/$/;"	m	struct:rwlock_tag
+valid	workq.h	/^    int                 valid;          \/* set when valid *\/$/;"	m	struct:workq_tag
+value	cond.c	/^    int                 value;  \/* Access protected by mutex *\/$/;"	m	struct:my_struct_tag	file:
+value	cond_dynamic.c	/^    int                 value;  \/* Access protected by mutex *\/$/;"	m	struct:my_struct_tag	file:
+value	cond_static.c	/^    int                 value;  \/* Access protected by mutex *\/$/;"	m	struct:my_struct_tag	file:
+value	mutex_dynamic.c	/^    int                 value;  \/* Access protected by mutex *\/$/;"	m	struct:my_struct_tag	file:
+value	mutex_static.c	/^    int                 value;  \/* Access protected by mutex *\/$/;"	m	struct:my_struct_tag	file:
+value	workq_main.c	/^    int         value;$/;"	m	struct:power_tag	file:
+w_active	rwlock.h	/^    int                 w_active;       \/* writer active *\/$/;"	m	struct:rwlock_tag
+w_collisions	rwlock_try_main.c	/^    int         w_collisions;$/;"	m	struct:thread_tag	file:
+w_wait	rwlock.h	/^    int                 w_wait;         \/* writers waiting *\/$/;"	m	struct:rwlock_tag
+wait_thread	cond.c	/^wait_thread (void *arg)$/;"	f
+work_count	crew.c	/^    long                work_count;     \/* Count of work items *\/$/;"	m	struct:crew_tag	file:
+work_p	crew.c	/^} work_t, *work_p;$/;"	t	typeref:struct:work_tag	file:
+work_t	crew.c	/^} work_t, *work_p;$/;"	t	typeref:struct:work_tag	file:
+work_tag	crew.c	/^typedef struct work_tag {$/;"	s	file:
+worker_p	crew.c	/^} worker_t, *worker_p;$/;"	t	typeref:struct:worker_tag	file:
+worker_routine	cancel_subcontract.c	/^void *worker_routine (void *arg)$/;"	f
+worker_routine	crew.c	/^void *worker_routine (void *arg)$/;"	f
+worker_t	crew.c	/^} worker_t, *worker_p;$/;"	t	typeref:struct:worker_tag	file:
+worker_tag	crew.c	/^typedef struct worker_tag {$/;"	s	file:
+workers	cancel_subcontract.c	/^   pthread_t    workers[THREADS];       \/* thread identifiers *\/$/;"	m	struct:team_tag	file:
+workq	workq_main.c	/^workq_t workq;$/;"	v
+workq_add	workq.c	/^int workq_add (workq_t *wq, void *element)$/;"	f
+workq_destroy	workq.c	/^int workq_destroy (workq_t *wq)$/;"	f
+workq_ele_t	workq.h	/^} workq_ele_t;$/;"	t	typeref:struct:workq_ele_tag
+workq_ele_tag	workq.h	/^typedef struct workq_ele_tag {$/;"	s
+workq_init	workq.c	/^int workq_init (workq_t *wq, int threads, void (*engine)(void *arg))$/;"	f
+workq_server	workq.c	/^static void *workq_server (void *arg)$/;"	f	file:
+workq_t	workq.h	/^} workq_t;$/;"	t	typeref:struct:workq_tag
+workq_tag	workq.h	/^typedef struct workq_tag {$/;"	s
+write	rwlock.h	/^    pthread_cond_t      write;          \/* wait for write *\/$/;"	m	struct:rwlock_tag
+writer_thread	thread.c	/^void *writer_thread (void *arg)$/;"	f
+yield_flag	backoff.c	/^int yield_flag = 0;     \/* 0: no yield, >0: yield, <0: sleep *\/$/;"	v

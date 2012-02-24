@@ -1,0 +1,155 @@
+From 67ef58ba0bcc54faa41c21293ee97504a58bf48a Mon Sep 17 00:00:00 2001
+From: Matt McCormick (thewtex) <matt@mmmccormick.com>
+Date: Fri, 29 Oct 2010 12:40:49 -0500
+Subject: [PATCH 2/3] Make a Cannibal class.
+
+This class inherits from Animal.  If the population gets bigger than the food
+source, instead of dying, it will eat one of its own.
+---
+ sc/documentation/src/Animal.hpp   |   17 ++++++++++-------
+ sc/documentation/src/Cannibal.cpp |   24 ++++++++++++++++++++++++
+ sc/documentation/src/Cannibal.hpp |   29 +++++++++++++++++++++++++++++
+ sc/documentation/src/main.cpp     |    6 +++---
+ 4 files changed, 66 insertions(+), 10 deletions(-)
+ create mode 100644 sc/documentation/src/Cannibal.cpp
+ create mode 100644 sc/documentation/src/Cannibal.hpp
+
+diff --git a/sc/documentation/src/Animal.hpp b/sc/documentation/src/Animal.hpp
+index 686c7b5..cd69b01 100644
+--- a/sc/documentation/src/Animal.hpp
++++ b/sc/documentation/src/Animal.hpp
+@@ -8,28 +8,31 @@
+ 
+ class Animal : public Organism {
+ 
+-private :
++protected :
+   std::vector<std::string> food;
+ 
+-  void eatSomething(Forest& forest, int nfood) const;
+-  
++  virtual void eatSomething(Forest& forest, int nfood) const;
++
+ public :
+   Animal(const Animal& animal) :
+     Organism(animal), food(animal.food)
+   {
+-
+   }
+ 
+-  Animal(const std::string& name, double rep, int maxage, 
++  Animal(const std::string& name, double rep, int maxage,
+    const std::vector<std::string>& afood) :
+     Organism(name, rep, maxage), food(afood)
+   {
+-    
++  }
++
++  Animal(const std::string& name, double rep, int maxage ):
++    Organism(name, rep, maxage)
++  {
+   }
+ 
+   virtual void specialAdvance(Forest& forest);
+ 
+-  Organism* clone() const { return new Animal(*this); }
++  virtual Organism* clone() const { return new Animal(*this); }
+ 
+ 
+ };
+diff --git a/sc/documentation/src/Cannibal.cpp b/sc/documentation/src/Cannibal.cpp
+new file mode 100644
+index 0000000..cedeba6
+--- /dev/null
++++ b/sc/documentation/src/Cannibal.cpp
+@@ -0,0 +1,24 @@
++#include "Cannibal.hpp"
++
++
++void Cannibal::specialAdvance(Forest& forest)
++{
++  int nfood = 0;
++    
++  for(size_t i = 0; i < food.size(); i++) {
++    nfood += forest.getPopulation(food[i]);
++  }
++
++  int popi = forest.getPopulation(name);
++  if(popi > nfood) {
++
++    double popd = popi;
++    if(rand()/static_cast<double>(RAND_MAX) > nfood/popd) {
++      // We eat one of our own.  Yummy.
++      forest.kill(name);
++      return;
++    }
++  }
++
++  eatSomething(forest, nfood);
++}
+diff --git a/sc/documentation/src/Cannibal.hpp b/sc/documentation/src/Cannibal.hpp
+new file mode 100644
+index 0000000..20ea88d
+--- /dev/null
++++ b/sc/documentation/src/Cannibal.hpp
+@@ -0,0 +1,29 @@
++#ifndef _CANNIBAL_HPP_
++#define _CANNIBAL_HPP_
++
++#include <cstdlib>
++
++#include "Animal.hpp"
++#include "Forest.hpp"
++
++class Cannibal : public Animal {
++
++public :
++  Cannibal(const Cannibal& cannibal) :
++    Animal(cannibal)
++  {
++  }
++
++  Cannibal(const std::string& name, double rep, int maxage,
++   const std::vector<std::string>& afood) :
++    Animal(name, rep, maxage)
++  {
++  this->food = afood;
++  }
++
++  virtual void specialAdvance(Forest& forest);
++
++  virtual Organism* clone() const { return new Cannibal(*this); }
++};
++
++#endif
+diff --git a/sc/documentation/src/main.cpp b/sc/documentation/src/main.cpp
+index 90b5ad9..028ee98 100644
+--- a/sc/documentation/src/main.cpp
++++ b/sc/documentation/src/main.cpp
+@@ -5,7 +5,7 @@
+ #include "Forest.hpp"
+ #include "Plant.hpp"
+ #include <vector>
+-#include "Animal.hpp"
++#include "Cannibal.hpp"
+ 
+ int main()
+ {
+@@ -18,12 +18,12 @@ int main()
+ 
+   std::vector<std::string> food;
+   food.push_back("grass");
+-  Animal rabbit("rabbit", 1.05/YEAR, YEAR, food);
++  Cannibal cannibunny("rabbit", 1.05/YEAR, YEAR, food);
+ 
+ 
+   int i;
+   for(i = 0; i < 1000; i++) forest.addOrganism(grass);
+-  for(i = 0; i < 500; i++)  forest.addOrganism(rabbit);
++  for(i = 0; i < 500; i++)  forest.addOrganism(cannibunny);
+ 
+   Time time(0, 200);
+   while(time.step(forest)) {
+-- 
+1.7.2.2
+

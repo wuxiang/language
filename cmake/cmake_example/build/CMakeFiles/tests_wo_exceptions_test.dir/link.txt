@@ -1,0 +1,1 @@
+/usr/bin/c++      CMakeFiles/tests_wo_exceptions_test.dir/tests_wo_exceptions.cpp.o  -o tests_wo_exceptions_test -rdynamic liboopl.a 

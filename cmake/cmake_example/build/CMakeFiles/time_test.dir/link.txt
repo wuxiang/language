@@ -1,0 +1,1 @@
+/usr/bin/c++      CMakeFiles/time_test.dir/time_test.cpp.o  -o time_test -rdynamic liboopl.a 

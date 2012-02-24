@@ -1,0 +1,24 @@
+From 301acfdefb87d4d70de9990b4873f84c2c31ac9c Mon Sep 17 00:00:00 2001
+From: Matt McCormick (thewtex) <matt@mmmccormick.com>
+Date: Fri, 29 Oct 2010 12:55:15 -0500
+Subject: [PATCH 2/2] Answer to the exercise.
+
+---
+ sc/documentation/src/CMakeLists.txt |    1 +
+ 1 files changed, 1 insertions(+), 0 deletions(-)
+
+diff --git a/sc/documentation/src/CMakeLists.txt b/sc/documentation/src/CMakeLists.txt
+index 489b85e..cfb9cf9 100644
+--- a/sc/documentation/src/CMakeLists.txt
++++ b/sc/documentation/src/CMakeLists.txt
+@@ -46,6 +46,7 @@ include_directories( ${OOP_SOURCE_DIR} )
+ # Add any new source files to this list.
+ set( OOP_SRC
+   Animal.cpp
++  Cannibal.cpp
+   Forest.cpp
+   main.cpp
+   Organism.cpp
+-- 
+1.7.2.2
+

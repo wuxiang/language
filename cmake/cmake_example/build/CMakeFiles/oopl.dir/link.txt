@@ -1,0 +1,2 @@
+/usr/bin/ar cr liboopl.a  CMakeFiles/oopl.dir/Animal.cpp.o CMakeFiles/oopl.dir/Forest.cpp.o CMakeFiles/oopl.dir/Organism.cpp.o CMakeFiles/oopl.dir/Plant.cpp.o CMakeFiles/oopl.dir/Time.cpp.o CMakeFiles/oopl.dir/CppException.cpp.o
+/usr/bin/ranlib liboopl.a
