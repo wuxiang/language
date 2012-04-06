@@ -6,7 +6,15 @@
 
 bool find_file_in_current_dir(const std::string& source, const std::string& name, std::string& des)
 {
-    for (boost::filesystem::directory_iterator it(source); it != boost::filesystem::directory_iterator(); ++it)
+    boost::filesystem::path path(source);
+    if (boost::filesystem::exists(path))
+    {
+        std::cout << "path is not exist" << std::endl;
+        return false;
+    }
+    std::cout << path << std::endl;
+
+    for (boost::filesystem::directory_iterator it(path); it != boost::filesystem::directory_iterator(); ++it)
     {
         if (boost::filesystem::is_regular_file(it->status()))
         {
