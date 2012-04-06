@@ -6,27 +6,35 @@
 
 bool find_file_in_current_dir(const std::string& source, const std::string& name, std::string& des)
 {
-    boost::filesystem::path path(source);
-    if (boost::filesystem::exists(path))
-    {
-        std::cout << "path is not exist" << std::endl;
-        return false;
-    }
-    std::cout << path << std::endl;
+	boost::filesystem::path src_path(source);
+	if (!boost::filesystem::exists(src_path))
+	{
+		std::cout << "file not exist" << std::endl;
+		return false;
+	}
 
-    for (boost::filesystem::directory_iterator it(path); it != boost::filesystem::directory_iterator(); ++it)
+    for (boost::filesystem::directory_iterator it(src_path); it != boost::filesystem::directory_iterator(); ++it)
     {
         if (boost::filesystem::is_regular_file(it->status()))
         {
             if (it->filename() == name)
             {
-                std::cout << *it << std::endl;
-                //des = it->path.string();
+                des = it->path().string();
                 return true;
             }
         }
+
+		if (boost::filesystem::is_directory(it->status()))
+		{
+			std::string new_dir = it->path().string() + "/";
+			if (find_file_in_current_dir(new_dir, name, des))
+			{
+				return true;
+			}
+		}
+
     }
-    return false;
+	return false;
 }
 
 
@@ -73,11 +81,12 @@ void print_path(const boost::filesystem::path& path)
 int main()
 {
     boost::filesystem::path path = boost::filesystem::current_path();
-    print_path(path);
+    //print_path(path);
 
     std::string result;
     std::string name("sizeof.c");
-    get_path(path.string(), 4, name, result);
+    get_path(path.string(), 2, name, result);
+	std::cout << result << std::endl;
 
     return 0;
 }
