@@ -1,7 +1,7 @@
 #!/usr/bin/ruby -w
-require "class.rb"
-require "module.rb"
-require "metaprogram.rb"
+require "./class.rb"
+require "./module.rb"
+require "./metaprogram.rb"
 #include "class.rb"
 
 p = Point.new(8, 8);

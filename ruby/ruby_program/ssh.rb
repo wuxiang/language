@@ -2,6 +2,7 @@
 
 require 'rubygems'
 require 'net/ssh'
+require 'net/ssh/shell'
 
 $cmd = 'ls -l'
 
@@ -27,12 +28,33 @@ def exist
 end
 
 #construct singleton object
-ssh = Net::SSH.start(HOST, USER, :password=>PASS) do |ssh|
-    while $working do 
-        getInput
-        
-        execute_cmd(ssh)
+#ssh = Net::SSH.start(HOST, USER, :password=>PASS) do |ssh|
+#    while $working do 
+#        getInput
+#        
+#        execute_cmd(ssh)
+#
+#        exist
+#    end
+#end
 
-        exist
-    end
+ssh = Net::SSH.start(HOST, USER, :password=>PASS) do |session|
+    puts "begin ssh"
+    shell = session.shell.open
+#        while $working do 
+#            getInput
+#
+#            if command = /[a-zA-Z]*/.match($cmd)
+#                puts "regexp match success(#{command})"
+#                #arg = $cmd.sub(command)
+#                #puts "(#{arg})"
+#            end
+#            
+#            exist
+#        end
+    puts "ssh"
+    shell.exit
 end
+
+puts "end"
+

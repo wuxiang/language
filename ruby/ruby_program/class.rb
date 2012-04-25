@@ -45,8 +45,10 @@ class Point
 		when 0, -2 then   @x;
 		when 1, -1 
 			@y;
-		when :x, "x": @x;
-		when :y, "y": @y;
+		when :x, "x"
+            @x;
+		when :y, "y" 
+            @y;
 		else nil;
 		end
 	end
