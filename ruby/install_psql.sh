@@ -14,11 +14,11 @@ sudo apt-get update
 #sudo apt-get install -y postgresql-9.1 postgresql-client-9.1 postgresql-contrib-9.1
 #sudo apt-get update
 
-sudo apt-get install -y postgresql-9.1 postgresql-client-9.1 postgresql-contrib-9.1
-cd /etc/init.d/
-sudo ./postgresql stop
-
-cd /var/run/
-sudo chmod -R 777 postgresql/
+sudo apt-get install -y postgresql-9.1 postgresql-client-9.1 postgresql-contrib-9.1 --force-yes
+#cd /etc/init.d/
+#sudo ./postgresql stop
+#
+#cd /var/run/
+#sudo chmod -R 777 postgresql/
 sudo apt-get install libpq-dev
 exit 0
