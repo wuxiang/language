@@ -7,6 +7,6 @@ int main()
     arg[0] = "ssh.sh";
     arg[1] = NULL;
     //execlp("~/language/shell/ssh.sh", "./ssh.sh", NULL);
-    execv("/home/wuxiang/language/shell/ssh.sh", arg);
+    execv("/home/wuxiang/git_project/language/shell/ssh.sh", arg);
     return 0;
 }

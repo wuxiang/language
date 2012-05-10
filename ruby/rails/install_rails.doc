@@ -1,0 +1,50 @@
+#resolve problem when install rails 
+ 1173  sudo ./sprockets-2.1.2.gem
+ 1174  sudo gem install sprockets-2.1.2.gem
+ 1228  sudo apt-get install sqlite-devel
+ 1293  sudo gem install ruby-debug-ide19 — –with-ruby-include=$rvm_path/src/ruby-head/
+ 1315  sudo init 6
+ 1386  sudo gem install ruby-gem
+ 1389  sudo gem install ruby-debug19 -- --with-ruby-include=$rvm_path/src/ruby-1.9.2-head/
+ 1394  sudo apt-get install sqlite-devel
+ 1396  sudo apt-get install sqlite3
+ 1397  sudo apt-get install libsqlite3-dev
+ 1398  sudo gem update --system
+ 1400  sudo gem install sprockets -v '2.1.2'
+ 1402  sudo gem install sprockets -v '2.1.2'
+ 1403  sudo apt-get install curl-ca-bundle
+ 1404  sudo gem install bundler
+ 1405  sudo run bundle install
+ 1423  sudo rvm pkg install openssl
+ 1424  sudo apt-get install openssl
+ 1425  sudo apt-get update
+ 1437  sudo gem install activesupport -v '3.2.3'
+ 1440  sudo gem install sprockets -v '2.1.2'
+ 1538  sudo gem install net-scp
+
+#cofigure postgres when use
+ 1612  sudo vim pg_hba.conf 
+ 1615  sudo vim postgresql.conf 
+ 1616  sudo vim pg_hba.conf
+ 1618  sudo service postgresql restart
+ 1620  sudo ./postgresql stop
+ 1621  sudo service postgresql restart 
+ 1624  sudo service postgresql restart 
+ 1627  sudo chmod -R 777 postgresql/
+ 1628  sudo service postgresql restart 
+ 1633  sudo kill -9 15732
+ 1642  sudo ./postgresql stop
+ 1644  sudo ./postgresql stop
+ 1649  sudo chmod -R  777 postgresql/
+ 1654  sudo vim pg_hba.conf 
+ 1661  sudo chmod -R 777 postgresql/
+ 1731  sudo ./postgresql stop
+ 1734  sudo chmod -R 777 postgresql/
+ 1853  sudo kill -9 1726
+ 1899  history |grep "sudo apt-get install"
+ 1900  history |grep "sudo apt-get"
+ 1902  history |grep "sudo gem"
+ 1915  sudo ./postgresql stop
+ 1924  sudo vim postgresql.conf 
+ 1926  sudo vim pg_hba.conf 
+ 1936  sudo chmod -R 777 postgresql/
