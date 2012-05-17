@@ -1,0 +1,10 @@
+sudo passwd root
+su - root
+su root
+apt-get install open-iscsi
+apt-get install open-iscsi-utils 
+iscsiadm -m discovery -t sendtargets -p 192.168.1.49
+iscsiadm -m node -T iqn.2011-03.example.org.istgt:test -p 192.168.1.49 -l
+fdisk -l
+fdisk /dev/sdb
+exit
