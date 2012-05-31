@@ -1,3 +1,4 @@
+#map.connect '', :controller => "main", :action => "welcome"
 R4rmusic1::Application.routes.draw do
   get "composer/show"
 
@@ -6,6 +7,8 @@ R4rmusic1::Application.routes.draw do
   get "work/show"
 
   get "main/welcome"
+
+#  map.connect '', :controller => "main", :action => "welcome"
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
