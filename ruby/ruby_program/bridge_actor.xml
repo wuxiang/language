@@ -1,0 +1,191 @@
+<core_definition xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:noNamespaceSchemaLocation="core.xsd" namespace="core1" destination="src/">
+
+  <!--
+     ======================= Ning Xiao ==================
+  -->
+
+  <type name="bridge_objects">
+    <id id_type="nb_id_t" actor_type="ac_object" name="bridge_ids" is_array="true" />
+  </type>
+
+  <type name="bridge_object">
+    <id id_type="nb_id_t" actor_type="ac_object" name="bridge_id" />
+  </type>
+
+  <type name="bridge_execute_impl_flag">
+    <literal type="boolean" name="is_execute_impl" />
+  </type>
+
+  <type name="byte_stream">
+    <literal type="byte_array" name="data" />
+  </type>
+
+  <type name="bridge_entry_data">
+    <literal type="byte_array" name="data" />
+    <literal type="byte_array" name="ff_data" />
+    <id id_type="access_id_t" actor_type="ac_access" name="ac_id" />
+  </type>
+
+  <type name="bridge_entry_respond_data">
+    <sub type="bridge_entry_data" name="be_data" />
+    <literal type="boolean" name="success" />
+    <literal type="boolean" name="is_outgoing" />
+    <literal type="boolean" name="is_sync" />
+  </type>
+
+  <type name="client_response_data">
+    <literal type="byte_array" name="data" />
+    <literal type="byte_array" name="ff_data" />
+  </type>
+
+  <type name="run_impl_results">
+    <id id_type="nb_id_t" actor_type="ac_object" name="ids" is_array="true" />
+    <id id_type="host_committer_id_t" actor_type="ac_host_committer" name="hc_id" />
+  </type>
+
+  <type name="create_bridge_object_info">
+    <sub type="byte_stream" name="buffer" />
+    <id id_type="host_committer_id_t" actor_type="ac_host_committer" name="hc_id" />
+  </type>
+
+  <type name="regist_bridge_object_info">
+    <sub type="byte_stream" name="buffer" />
+    <id id_type="bridge_id_t" actor_type="ac_bridge" name="bridge_id" />
+  </type>
+
+  <type name="bridge_content">
+    <id id_type="access_id_t" actor_type="ac_access" name="access_id" />
+    <id id_type="bridge_factory_id_t" actor_type="ac_bridge_factory" name="bf_id" />
+    <id id_type="nb_id_t" actor_type="ac_object" name="user_name_id" />
+  </type>
+
+  <type name="id_name_pair">
+    <id id_type="nb_id_t" actor_type="ac_object" name="id" />
+    <literal type="string" name="name" />
+  </type>
+
+  <type name="bridge_decl_info">
+    <sub type="id_name_pair" name="default_decls" is_array="true"/>
+    <sub type="id_name_pair" name="start_decls" is_array="true"/>
+    <sub type="id_name_pair" name="general_decl" />
+  </type>
+
+  <type name="send_out_info">
+    <id id_type="nb_id_t" actor_type="ac_object" name="data_id" />
+    <id id_type="nb_id_t" actor_type="ac_object" name="ff_id" />
+    <id id_type="host_committer_id_t" actor_type="ac_host_committer" name="hc_id" />
+  </type>
+
+  <type name="send_out_async_info">
+    <literal type="byte_array" name="data" />
+    <literal type="byte_array" name="ff_data" />
+  </type>
+
+  <type name="send_out_result">
+    <id id_type="nb_id_t" actor_type="ac_object" name="data_id" />
+    <id id_type="nb_id_t" actor_type="ac_object" name="ff_id" />
+  </type>
+
+  <type name="bridge_object_info">
+    <literal type="integer" name="struct_num" />
+    <literal type="string" name="struct_name" />
+    <id id_type="nb_id_t" actor_type="ac_object" name="descriptor_id" />
+    <id id_type="nb_id_t" actor_type="ac_object" name="interface_id" />
+  </type>
+
+  <type name="bridge_object_infos">
+    <sub type="bridge_object_info" name="bobj_info" is_array="true" />
+  </type>
+
+  <actor name="ac_bridge_factory">
+    <include><![CDATA[#include "ac_bridge/ac_bridge_factory_impl.h"]]>
+    </include>
+    <custom_code><![CDATA[private:
+    bool throw_exeception(req_num_t req_num, std::string exp_str);
+
+private:
+    ac_bridge_factory_impl m_impl;]]>
+    </custom_code>
+    <init async="true">
+      <pseudo_code>
+	if load:
+	db_value = ac_object_db.read(bridge_factory_id_t);
+	else if create
+	db_value = create_bridge_factory()	
+      </pseudo_code>
+      <call_out target_type="ac_object" call_name="get_value_sync" />
+      <call_out target_type="ac_object_db" call_name="read" />
+      <call_out target_type="ac_object_db" call_name="write" />
+      <call_out target_type="ac_object_db" call_name="commit" />
+      <call_out target_type="ac_id_dispenser" call_name="request_alone_nb_id" />
+      <call_out target_type="ac_id_dispenser" call_name="request_nb_id" />
+      <call_out target_type="ac_id_dispenser" call_name="request_host_committer_id" />
+      <call_out target_type="ac_host_committer" call_name="request_nb_id" />
+      <call_out target_type="ac_host_committer" call_name="request_nb_id_and_init" />
+    </init>
+    <call name="create_bridge_object" input_type="create_bridge_object_info" output_type="bridge_object" 
+	  async="false">
+      <call_out target_type="ac_id_dispenser" call_name="request_nb_id" />
+    </call>
+    <call name="uncreate_bridge_object" input_type="bridge_object" output_type="byte_stream" 
+	  async="true">
+      <call_out target_type="ac_object" call_name="get_value_async" />
+    </call>
+    <call name="get_decl_info" output_type="bridge_decl_info" async="false"/>
+    <call name="get_outgoing_ac_if" output_type="nb_id_t" async="false"/>
+    <call name="get_bridge_obj_by_name" input_type="string" output_type="nb_id_t" async="false"/>
+    <call name="get_descriptor_by_name" input_type="std::string" output_type="nb_id_t" async="true" />
+    <call name="get_bridge_interface_by_name" input_type="std::string" output_type="nb_id_t" async="true" />
+    <call name="get_bridge_object_info" output_type="bridge_object_infos" async="true" />
+  </actor>
+
+  <actor name="ac_bridge" is_singleton="true">
+    <!--
+      The external system own the special access ablility. So external system can recieve 
+      the bridge_info, then translated to bridge_object and put it into bridge actor's 
+      task queue. 
+    -->
+    <include><![CDATA[#include "ac_bridge/ac_bridge_impl.h"]]>
+    </include>
+    <custom_code><![CDATA[private:
+    ac_bridge_impl_ptr m_ptr_impl;]]>
+    </custom_code>
+    <init async="false" />
+    <call name="trigger" input_type="bridge_entry_data" output_type="bridge_entry_respond_data" async="true">
+      <call_out target_type="ac_id_dispenser" call_name="request_root_committer_id" />
+      <call_out target_type="ac_id_dispenser" call_name="request_center_committer_id" />
+      <call_out target_type="ac_id_dispenser" call_name="request_host_committer_id" />
+      <call_out target_type="ac_id_dispenser" call_name="request_host_committer_id_new" />
+      <call_out target_type="ac_id_dispenser" call_name="request_nb_id" />
+      <call_out target_type="ac_id_dispenser" call_name="request_exe_bridge_id" />
+      <call_out target_type="ac_id_dispenser" call_name="request_execution_id" />
+      <call_out target_type="ac_id_dispenser" call_name="request_access_id" />
+      <call_out target_type="ac_root_committer" call_name="regist_center_committer" />
+      <call_out target_type="ac_center_committer" call_name="register_host_committer_sync" />
+      <call_out target_type="ac_center_committer" call_name="set_root_committer" />
+      <call_out target_type="ac_host_committer" call_name="set_center_committer" />
+      <call_out target_type="ac_host_committer" call_name="request_access_id" />
+      <call_out target_type="ac_host_committer" call_name="request_nb_id" />
+      <call_out target_type="ac_object" call_name="get_value_async" />
+      <call_out target_type="ac_root_committer" call_name="pre_commit" />
+      <call_out target_type="ac_root_committer" call_name="commit" />
+      <call_out target_type="ac_execution" call_name="trigger_end" />
+      <call_out target_type="ac_execution" call_name="start" />
+      <call_out target_type="ac_access" call_name="create_execution" />
+      <call_out target_type="ac_host_committer" call_name="set_additional_objects" />
+    </call>
+    <call name="send_out" input_type="send_out_info" output_type="send_out_result" async="true" />
+    <call name="send_out_async" input_type="send_out_async_info" async="false" />
+    <call name="client_response" input_type="client_response_data" async="true" /> 
+  </actor>
+
+</core_definition>
+
+<!--
+   xml should only have one root elements
+<test name="test" value="1">
+</test>
+-->
+
+<!-- ex:set ts=8 sw=8 et: -->
