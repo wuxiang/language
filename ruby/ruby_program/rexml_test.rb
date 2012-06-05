@@ -10,26 +10,26 @@ class XMLfile
     def run
         root = Document.new(File.new(@m_file)).root;
         puts root.to_s;
-        #ns = root.attributes;
+        ns = root.attributes;
 
-        #index = 0;
-        #puts "+++++++++print out attributes++++++++++++"
-        #ns.each do |name|
-        #    puts "#{index} :"
-        #    puts name
-        #    index += 1;
-        #end
-        #puts "+++++++++end print out attributes++++++++++++"
+        index = 0;
+        puts "+++++++++print out attributes++++++++++++"
+        ns.each do |name|
+            puts "#{index} :"
+            puts name
+            index += 1;
+        end
+        puts "+++++++++end print out attributes++++++++++++"
 
-        #puts "++++++++++++++++++puts elements++++++++++++++"
-        #index = 0;
-        #root.elements.each do |elem|
-        #    puts "#{index} :"
-        #    puts elem.expanded_name;
-        #    #puts elem.to_s;
-        #    index += 1;
-        #end
-        #puts "++++++++++++++++++end puts elements++++++++++++++"
+        puts "++++++++++++++++++puts elements++++++++++++++"
+        index = 0;
+        root.elements.each do |elem|
+            puts "#{index} :"
+            puts elem.expanded_name;
+            #puts elem.to_s;
+            index += 1;
+        end
+        puts "++++++++++++++++++end puts elements++++++++++++++"
     end
 end
 
