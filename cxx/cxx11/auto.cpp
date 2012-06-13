@@ -15,5 +15,15 @@ int main()
         std::cout << *it << std::endl;
         ++it;
     }
+
+    std::cout << "+++++++++++++++++2++++++++++++++++" << std::endl;
+    std::vector<int>  other{0,1,2,3,4,5};
+
+    for (auto &i:other)
+    {
+        std::cout << i << " ";
+    }
+    std::cout << '\n';
+
     return 0;
 }
