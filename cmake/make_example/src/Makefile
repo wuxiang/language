@@ -11,3 +11,6 @@ compile:
 link:
 	${CC} -shared -o ${LIB} ${OBJS}
 
+clean:
+	rm -rf ${OBJS} ${LIB}
+
