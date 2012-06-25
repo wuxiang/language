@@ -156,3 +156,174 @@ void pg_con::transaction_rooback()
     }
 }
 
+bool pg_con::create_table()
+{
+    m_result = PQexec(m_ptrPG, "begin");
+    if (PQresultStatus(m_result) != PGRES_COMMAND_OK)
+    {
+        fprintf(stderr, " create table, transaction failed: %s\n", PQerrorMessage(m_ptrPG));
+        PQclear(m_result);
+        reset();
+        return false;
+    }
+    PQclear(m_result);
+
+    m_result = PQexec(m_ptrPG, "create table first( \
+                                time  date,\
+                                writer varchar(10)\
+                                )");
+    if (PQresultStatus(m_result) != PGRES_COMMAND_OK)
+    {
+        fprintf(stderr, " create table failed: %s\n", PQerrorMessage(m_ptrPG));
+        PQclear(m_result);
+        reset();
+        return false;
+    }
+
+    m_result = PQexec(m_ptrPG, "commit");
+    if (PQresultStatus(m_result) != PGRES_COMMAND_OK)
+    {
+        fprintf(stderr, " create table, transaction failed: %s\n", PQerrorMessage(m_ptrPG));
+        PQclear(m_result);
+        reset();
+        return false;
+    }
+
+    PQclear(m_result);
+    return true;
+}
+
+bool pg_con::drop_table(const char* tbName)
+{
+    m_result = PQexec(m_ptrPG, "begin");
+    if (PQresultStatus(m_result) != PGRES_COMMAND_OK)
+    {
+        fprintf(stderr, " drop table, transaction failed: %s\n", PQerrorMessage(m_ptrPG));
+        PQclear(m_result);
+        reset();
+        return false;
+    }
+    PQclear(m_result);
+
+    m_result = PQexec(m_ptrPG, "drop table first");
+    if (PQresultStatus(m_result) != PGRES_COMMAND_OK)
+    {
+        fprintf(stderr, " drop table failed: %s\n", PQerrorMessage(m_ptrPG));
+        PQclear(m_result);
+        reset();
+        return false;
+    }
+
+    m_result = PQexec(m_ptrPG, "commit");
+    if (PQresultStatus(m_result) != PGRES_COMMAND_OK)
+    {
+        fprintf(stderr, " drop table, transaction failed: %s\n", PQerrorMessage(m_ptrPG));
+        PQclear(m_result);
+        reset();
+        return false;
+    }
+
+    PQclear(m_result);
+    return true;
+}
+
+//insert
+bool pg_con::insert(const std::string& writer, const std::string& date)
+{
+    //transaction begin
+    m_result = PQexec(m_ptrPG, "begin");
+    if (PQresultStatus(m_result) != PGRES_COMMAND_OK)
+    {
+        fprintf(stderr, " insert table, transaction failed: %s\n", PQerrorMessage(m_ptrPG));
+        PQclear(m_result);
+        reset();
+        return false;
+    }
+
+    std::string  command = "insert into first(time,writer) values($1, $2)";
+    const char* value[] = {date.c_str(), writer.c_str()};
+    const int length[] = {date.length(), writer.length()};
+    const int format[] = {0, 0};
+    m_result = PQexecParams(m_ptrPG, command.c_str(), 2, NULL, value, length, format, 0);
+    if (PQresultStatus(m_result) != PGRES_COMMAND_OK)
+    {
+        fprintf(stderr, " insert table failed: %s\n", PQerrorMessage(m_ptrPG));
+        PQclear(m_result);
+        reset();
+        return false;
+    }
+
+
+    //transaction end
+    m_result = PQexec(m_ptrPG, "commit");
+    if (PQresultStatus(m_result) != PGRES_COMMAND_OK)
+    {
+        fprintf(stderr, " insert table, transaction failed: %s\n", PQerrorMessage(m_ptrPG));
+        PQclear(m_result);
+        reset();
+        return false;
+    }
+
+    PQclear(m_result);
+    return true;
+}
+
+//del
+bool pg_con::delete_table()
+{
+    return true;
+}
+
+//update
+bool pg_con::update(const std::string& writer)
+{
+    return true;
+}
+
+//query
+bool pg_con::select()
+{
+    //transaction begin
+    m_result = PQexec(m_ptrPG, "begin");
+    if (PQresultStatus(m_result) != PGRES_COMMAND_OK)
+    {
+        fprintf(stderr, " select table, transaction failed: %s\n", PQerrorMessage(m_ptrPG));
+        PQclear(m_result);
+        reset();
+        return false;
+    }
+
+    m_result = PQexec(m_ptrPG, "select * from first");
+    if (PQresultStatus(m_result) != PGRES_TUPLES_OK)
+    {
+        fprintf(stderr, " select failed: %s\n", PQerrorMessage(m_ptrPG));
+        PQclear(m_result);
+        reset();
+        return false;
+    }
+
+    int rows = PQntuples(m_result);
+    int columns = PQnfields(m_result);
+    for (int i = 0; i < rows; ++i)
+    {
+        for (int j = 0; j < columns; ++j)
+        {
+            fprintf(stderr, "%s\t", PQgetvalue(m_result, i, j));
+        }
+        fprintf(stderr, "\n");
+    }
+
+    //transaction end
+    m_result = PQexec(m_ptrPG, "commit");
+    if (PQresultStatus(m_result) != PGRES_COMMAND_OK)
+    {
+        fprintf(stderr, " select table, transaction failed: %s\n", PQerrorMessage(m_ptrPG));
+        PQclear(m_result);
+        reset();
+        return false;
+    }
+
+    PQclear(m_result);
+    return true;
+}
+
