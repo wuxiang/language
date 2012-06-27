@@ -68,7 +68,11 @@ void merge_element(std::array<int, 100>& arr, std::size_t low, std::size_t middl
         ++j;
     }
 
-    std::swap_ranges(arr.begin() + low, arr.begin() + high, temp.begin());
+    for (std::size_t k = 0; k < temp.size(); ++k)
+    {
+        std::swap(temp[k], arr[low + k]);
+    }
+    //std::swap_ranges(arr.begin() + low, arr.begin() + high, temp.begin());
 }
 
 void merger_pass(std::array<int, 100>& arr, std::size_t length)
