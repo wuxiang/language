@@ -42,13 +42,12 @@ void print(const numerical&& v)
     std::cout << "end" << std::endl;
 }
 
-void print2(const int&& test)
+void print1(int&& test)
 {
 }
 
-void print1(int& test)
+void print1(const int& test)
 {
-    print2(test);
 }
 
 template<typename T>
