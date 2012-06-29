@@ -1,14 +1,15 @@
+/**************************************
+ * shell sort similar to insert sort,
+ * it divid totoal data to servel columns across by step
+ * and sorted by columns,
+*************************************/
+
 #include <iostream>
 #include <algorithm>
 #include <array>
 
 #include <stdio.h>
 #include <stdlib.h>
-/**************************************
- * shell sort similar to insert sort,
- * it divid totoal data to servel columns across by step
- * and sorted by columns,
-*************************************/
 
 //produce number for sort
 std::array<int, 100>&&  number()
