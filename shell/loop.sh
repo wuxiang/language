@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 for i in 1 2 3 4 5
 do
@@ -29,5 +29,13 @@ while [ $c -le 5 ]
 do
     echo "Welcone $c times"
         (( c++ ))
+done
+echo
+
+limit=10
+for((a=1,b=1; a<=limit; a++, b++))
+do
+    echo -n "$a-$b"
+    echo '\t'
 done
 echo

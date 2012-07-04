@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 comparison="float"
 #if [ $comparison="integer" ]
@@ -54,7 +54,21 @@ fi
 
 e=5
 f=7
-if [ $e==$f ]
+if [[ $e -eq $f ]]
+then
+    echo "exit true"
+else
+    echo "exit false"
+fi
+
+if [ $e -eq $f ]
+then
+    echo "exit true"
+else
+    echo "exit false"
+fi
+
+if test $e -eq $f 
 then
     echo "exit true"
 else

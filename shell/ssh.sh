@@ -1,6 +1,6 @@
 #!/bin/sh
 
-name="elison@192.168.1.19"
+name="elison@172.16.0.19"
 passwd="elison\n"
 ssh $name
 #send $passwd
