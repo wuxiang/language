@@ -38,9 +38,16 @@ b="world"
 
 if [ $a != $b ]
 then
-    echo "true"
+    echo "string true"
 else
-    echo "false"
+    echo "string false"
+fi
+
+if [ $a = $b ]
+then
+    echo "string true"
+else
+    echo "string false"
 fi
 
 c=
