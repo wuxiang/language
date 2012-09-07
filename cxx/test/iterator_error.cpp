@@ -14,6 +14,7 @@ int main()
         list.push_back(i);
     }
 
+    // vector
     std::vector<int>::iterator ite = vec.begin();
     std::advance(ite, 5);
 
@@ -23,6 +24,7 @@ int main()
     vec.erase(it1);
     std::cout << *ite << std::endl;
 
+    // list
     std::list<int>::iterator lt = list.begin();
     std::advance(lt, 5);
     std::list<int>::iterator lt1 = list.begin();
@@ -35,6 +37,28 @@ int main()
     std::cout << *lt << std::endl;
     list.erase(lt2);
     std::cout << *lt << std::endl;
+
+    // invalid iterator == end()
+    vec.clear();
+    if (ite == vec.end())
+    {
+        std::cout << "end" << std::endl;
+    }
+    else
+    {
+        std::cout << "non-end" << std::endl;
+    }
+
+    list.erase(lt);
+    //list.clear();
+    if (lt == list.end())
+    {
+        std::cout << "end" << std::endl;
+    }
+    else
+    {
+        std::cout << "non-end" << std::endl;
+    }
 
     //std::cout<<"capacity:"<<vec.capacity()<<std::endl;//查看预分配空间大小   
     //std::vector<int>::iterator iter =vec.begin()+2;   

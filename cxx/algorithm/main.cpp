@@ -1,5 +1,5 @@
 #include <iostream>
-#include "2Q.h"
+#include "lru.h"
 
 int main()
 {
