@@ -97,7 +97,7 @@ bool skipList<_K, _V>::search(const _K&   key, _V& value)
 	}
 
 	skip_node<_K, _V>*  pNode = head;
-	for (int i = levels; i >=0; ++i)
+	for (int i = levels; i >=0; --i)
 	{
 		while (pNode->link[i].key < key && pNode->link[i] != tail)
 		{
