@@ -1,0 +1,83 @@
+K 25
+svn:wc:ra_dav:version-url
+V 74
+/svn/MobilePhone/!svn/ver/22128/SourceCode/Server/wuxiang/DBfront/GW_front
+END
+mysqlConPool.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/MobilePhone/!svn/ver/22128/SourceCode/Server/wuxiang/DBfront/GW_front/mysqlConPool.cpp
+END
+mysqlLibrary.h
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/MobilePhone/!svn/ver/22128/SourceCode/Server/wuxiang/DBfront/GW_front/mysqlLibrary.h
+END
+sqlHandle.h
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/MobilePhone/!svn/ver/22128/SourceCode/Server/wuxiang/DBfront/GW_front/sqlHandle.h
+END
+GWDBfront.h
+K 25
+svn:wc:ra_dav:version-url
+V 86
+/svn/MobilePhone/!svn/ver/22128/SourceCode/Server/wuxiang/DBfront/GW_front/GWDBfront.h
+END
+GWexecutor.h
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/MobilePhone/!svn/ver/22128/SourceCode/Server/wuxiang/DBfront/GW_front/GWexecutor.h
+END
+mysqlConPool.h
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/MobilePhone/!svn/ver/22128/SourceCode/Server/wuxiang/DBfront/GW_front/mysqlConPool.h
+END
+mysqlThreadData.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/MobilePhone/!svn/ver/22128/SourceCode/Server/wuxiang/DBfront/GW_front/mysqlThreadData.cpp
+END
+stForMysql.h
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/svn/MobilePhone/!svn/ver/22181/SourceCode/Server/wuxiang/DBfront/GW_front/stForMysql.h
+END
+mysqlLibrary.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/MobilePhone/!svn/ver/22128/SourceCode/Server/wuxiang/DBfront/GW_front/mysqlLibrary.cpp
+END
+sqlHandle.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/MobilePhone/!svn/ver/22181/SourceCode/Server/wuxiang/DBfront/GW_front/sqlHandle.cpp
+END
+GWDBfront.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 88
+/svn/MobilePhone/!svn/ver/22128/SourceCode/Server/wuxiang/DBfront/GW_front/GWDBfront.cpp
+END
+GWexecutor.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 89
+/svn/MobilePhone/!svn/ver/22128/SourceCode/Server/wuxiang/DBfront/GW_front/GWexecutor.cpp
+END
+mysqlThreadData.h
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/svn/MobilePhone/!svn/ver/22128/SourceCode/Server/wuxiang/DBfront/GW_front/mysqlThreadData.h
+END

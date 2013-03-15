@@ -1,0 +1,46 @@
+8
+
+dir
+22128
+https://10.15.88.8:1818/svn/MobilePhone/SourceCode/Server/wuxiang/DBfront/GW_test
+https://10.15.88.8:1818/svn/MobilePhone
+
+
+
+2013-03-14T07:08:09.313625Z
+22128
+wuxiang
+
+
+svn:special svn:externals svn:needs-lock
+
+fifotest.cpp
+file
+22181
+
+
+
+2013-03-15T01:37:29.000000Z
+9cf23d858c0bd1b11c3c151d80ca44d8
+2013-03-15T02:03:42.719875Z
+22181
+wuxiang
+
+assistant
+dir
+
+CMakeLists.txt
+file
+22181
+
+
+
+2013-03-14T08:14:56.000000Z
+37994507e2a7d948d73d93dbd3d0e683
+2013-03-15T02:03:42.719875Z
+22181
+wuxiang
+
+DBfrontTest
+dir
+

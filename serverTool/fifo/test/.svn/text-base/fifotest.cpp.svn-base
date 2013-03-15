@@ -1,0 +1,12 @@
+#include <stdio.h>
+#include "correctTest.h"
+
+int main()
+{
+	printf("here testing fifo\n");
+	printf("=================program starting=================\n");
+	WrRdRightNow    test;
+	test.run();
+	printf("=================program exiting=================\n");
+	return 0;
+}

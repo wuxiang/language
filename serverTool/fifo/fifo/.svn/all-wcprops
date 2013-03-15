@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 70
+/svn/MobilePhone/!svn/ver/21920/SourceCode/Server/wuxiang/DBfront/fifo
+END
+GWFifo.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 81
+/svn/MobilePhone/!svn/ver/21920/SourceCode/Server/wuxiang/DBfront/fifo/GWFifo.cpp
+END
+GWFifo.h
+K 25
+svn:wc:ra_dav:version-url
+V 79
+/svn/MobilePhone/!svn/ver/21920/SourceCode/Server/wuxiang/DBfront/fifo/GWFifo.h
+END
+taginfo.cpp
+K 25
+svn:wc:ra_dav:version-url
+V 82
+/svn/MobilePhone/!svn/ver/21926/SourceCode/Server/wuxiang/DBfront/fifo/taginfo.cpp
+END
+GW_st.h
+K 25
+svn:wc:ra_dav:version-url
+V 78
+/svn/MobilePhone/!svn/ver/21920/SourceCode/Server/wuxiang/DBfront/fifo/GW_st.h
+END
+GWconstant.h
+K 25
+svn:wc:ra_dav:version-url
+V 83
+/svn/MobilePhone/!svn/ver/21920/SourceCode/Server/wuxiang/DBfront/fifo/GWconstant.h
+END
+taginfo.h
+K 25
+svn:wc:ra_dav:version-url
+V 80
+/svn/MobilePhone/!svn/ver/21920/SourceCode/Server/wuxiang/DBfront/fifo/taginfo.h
+END

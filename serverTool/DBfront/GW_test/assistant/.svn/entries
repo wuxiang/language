@@ -1,0 +1,76 @@
+8
+
+dir
+22128
+https://10.15.88.8:1818/svn/MobilePhone/SourceCode/Server/wuxiang/DBfront/GW_test/assistant
+https://10.15.88.8:1818/svn/MobilePhone
+
+
+
+2013-03-14T07:08:09.313625Z
+22128
+wuxiang
+
+
+svn:special svn:externals svn:needs-lock
+
+effiTest.h
+file
+
+
+
+
+2013-03-14T07:03:00.000000Z
+ad03d1d673456bcb0555f7706fdc202a
+2013-03-14T07:08:09.313625Z
+22128
+wuxiang
+
+correctTest.cpp
+file
+
+
+
+
+2013-03-14T07:02:59.000000Z
+c0cb1bc3ae87b0e54946686678124f43
+2013-03-14T07:08:09.313625Z
+22128
+wuxiang
+
+stForTest.h
+file
+
+
+
+
+2013-03-14T07:03:00.000000Z
+b7f0d587ca027c6dc892b84b2e067aca
+2013-03-14T07:08:09.313625Z
+22128
+wuxiang
+
+correctTest.h
+file
+
+
+
+
+2013-03-14T07:02:59.000000Z
+ab20476b26a34d8ae2ca32cced70ee45
+2013-03-14T07:08:09.313625Z
+22128
+wuxiang
+
+effiTest.cpp
+file
+
+
+
+
+2013-03-14T07:02:59.000000Z
+8a9b16ff95ce47bcb8ac45900cd58d4c
+2013-03-14T07:08:09.313625Z
+22128
+wuxiang
+

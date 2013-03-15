@@ -1,0 +1,236 @@
+#include "taginfo.h"
+
+TagInfo::TagInfo(const char* const fileName, const int& length, const int tag): m_self(tag), INTSIZE(sizeof(int))
+{
+	// set tag file name
+	char  tem[255];
+	bzero(tem, 255);
+	intToChar(m_self, tem);
+
+	char file[255];
+	bzero(file, 255);
+	strncpy(file, fileName, length);
+	strcat(file, tem);
+
+	// set tag file status
+	if (!initStatus(file))
+	{
+		exit(-1);
+	}
+
+	// set alerm  star time
+	time(&m_time);
+
+}
+
+bool TagInfo::initStatus(const char* const fileName)
+{
+	int fd = 0;
+	size_t  SFile = 0;
+
+	// make judgement of file exist
+	bool flag = (-1 == access(fileName, F_OK));
+
+	if (-1 == (fd = open(fileName, O_RDWR|O_CREAT)))
+	{
+		printf("%s(%d): open file failed!\n", __FILE__, __LINE__);
+		close(fd);
+		return false;
+	}
+
+	// set file size
+	if (flag)
+	{
+		if (-1 == ftruncate(fd, INIT_FILE_SIZE))
+		{
+			printf("%s(%d): resize file size failed!\n", __FILE__, __LINE__);
+			close(fd);
+			return false;
+		}
+
+		SFile = INIT_FILE_SIZE;
+	}
+	else
+	{
+		struct stat st;
+		memset(&st, 0, sizeof(st));
+		fstat(fd, &st);
+		SFile = st.st_size;
+	}
+
+	// mmap file to virtual memory
+	m_offset_ptr = (OffsetInfo*)mmap(NULL, SFile, PROT_READ|PROT_WRITE, MAP_SHARED, fd, 0);
+	if (m_offset_ptr == MAP_FAILED)
+	{
+		printf("%s(%d): mmap file to memory  failed!\n", __FILE__, __LINE__);
+		close(fd);
+		return false;
+	}
+
+	m_start_ptr = (char*)((int)m_offset_ptr + sizeof(struct OffsetInfo));
+
+	if (flag)
+	{
+		bzero(m_offset_ptr, sizeof(struct OffsetInfo));
+	}
+
+	m_offset_ptr->size = INIT_FILE_SIZE - sizeof(struct OffsetInfo);
+	m_end_ptr = m_start_ptr + m_offset_ptr->size;
+	m_get_ptr = m_start_ptr + m_offset_ptr->iget;
+	m_put_ptr = m_start_ptr + m_offset_ptr->iput;
+
+	close(fd);
+
+	return true;
+}
+
+TagInfo::~TagInfo()
+{
+	if (-1 == msync((void*)m_offset_ptr, INIT_FILE_SIZE, MS_SYNC))
+	{
+		printf("%s(%d)  commit failed in TagInfo deconstruct!!!\n", __FILE__, __LINE__);
+	}
+
+	printf("(*m_offset_ptr).iused = %d\n", (*m_offset_ptr).iused);
+	printf("(*m_offset_ptr).iget = %d\n", (*m_offset_ptr).iget);
+	printf("(*m_offset_ptr).iput = %d\n", (*m_offset_ptr).iput);
+	printf("(*m_offset_ptr).size = %d\n", (*m_offset_ptr).size);
+	munmap((void*)m_offset_ptr, INIT_FILE_SIZE);
+}
+
+bool  TagInfo::intToChar(int src, char*  des)
+{
+	for (int i = 0; i < INTSIZE; ++i)
+	{
+		des[i] = ((src >> (i * 8)) & 0xff);
+	}
+
+	return true;
+}
+
+int   TagInfo::charToInt(const char*  src)
+{
+	int res = 0;
+	for (int i = 0; i < INTSIZE; ++i)
+	{
+		res = res | (((int)(src[i]) << (i * 8)) & ((int)(0xff) << (i * 8)));
+	}
+
+	return res;
+}
+
+bool TagInfo::set(void* obj, int len)
+{
+	GW_lock_guard    lock(m_mtx);
+	if (m_offset_ptr->iused + len + INTSIZE > m_offset_ptr->size)
+	{
+		// resize file size
+		return false;
+	}
+	else
+	{
+		char  tmp[255] = {};
+		intToChar(len, tmp);
+
+		for (int i = 0; i < INTSIZE; ++i)
+		{
+			if (m_put_ptr == m_end_ptr)
+			{
+				m_put_ptr = m_start_ptr;
+			}
+
+			*m_put_ptr++ = tmp[i];
+		}
+
+		char* cntPtr = (char*)obj;
+		for (int i = 0; i < len; ++i)
+		{
+			if (m_put_ptr == m_end_ptr)
+			{
+				m_put_ptr = m_start_ptr;
+			}
+
+			*m_put_ptr++ = cntPtr[i];
+		}
+
+		int off = m_offset_ptr->iput + INTSIZE + len;
+		m_offset_ptr->iput =  off % m_offset_ptr->size;
+		m_offset_ptr->iused += INTSIZE + len;
+
+	}
+
+	if (!commit_or_not())
+	{
+		printf("%s(%d)  commit failed!!!\n", __FILE__, __LINE__);
+	}
+
+	return true;
+}
+
+bool  TagInfo::commit_or_not()
+{
+	time_t  tmpTime;
+	time(&tmpTime);
+	if (tmpTime - m_time >= COMMIT_PERIOD_TIME)
+	{
+		if (-1 == msync((void*)m_offset_ptr, INIT_FILE_SIZE, MS_SYNC))
+		{
+			return false;
+		}
+
+		m_time = tmpTime;
+	}
+
+	return true;
+}
+
+
+bool  TagInfo::get(void* obj, int* len)
+{
+	GW_lock_guard    lock(m_mtx);
+	if (m_offset_ptr->iused > 0)
+	{
+		char  tmp[255] = {};
+		for (int i = 0 ; i < INTSIZE; ++i)
+		{
+			if (m_get_ptr == m_end_ptr)
+			{
+				m_get_ptr = m_start_ptr;
+			}
+
+			tmp[i] = *m_get_ptr++;
+		}
+
+		*len = charToInt(tmp);
+		char*  ptr = (char*)obj;
+		for (int i = 0; i < *len; ++i)
+		{
+			if (m_get_ptr == m_end_ptr)
+			{
+				m_get_ptr = m_start_ptr;
+			}
+
+			ptr[i] = *m_get_ptr++;
+		}
+
+		m_offset_ptr->iused -= (INTSIZE + *len);
+		int off = m_offset_ptr->iget + INTSIZE + *len;
+		m_offset_ptr->iget =  off % m_offset_ptr->size;
+	}
+	else
+	{
+		printf("buffer is empty!!!\n");
+		*len = 0;
+
+		return false;
+	}
+
+	if (!commit_or_not())
+	{
+		printf("%s(%d)  commit failed!!!\n", __FILE__, __LINE__);
+	}
+
+	return true;
+}
+
+
