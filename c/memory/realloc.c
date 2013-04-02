@@ -26,5 +26,10 @@ int main()
 
 		p = ptr;
 	}
+
+	if (ptr = NULL)
+	{
+		fprintf(stderr, "error");
+	}
 	return 0;
 }
