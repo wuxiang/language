@@ -7,6 +7,7 @@
  * -i int
  * -n char*
  * ***************/
+
 bool getopt_func(int argc, char* argv[])
 {
 	bool flag = true;
@@ -34,7 +35,7 @@ bool getopt_func(int argc, char* argv[])
 	return flag;
 }
 
-void getopt_long_func(int argc, char* argv[])
+bool getopt_long_func(int argc, char* argv[])
 {
 	bool flag = true;
 	char*  optstring = "vi:n:";
@@ -47,6 +48,7 @@ void getopt_long_func(int argc, char* argv[])
 								{0, 0, 0, 0}};
 
 	int res = 0;
+	int i = 0;
 	while (-1 != (res = getopt_long(argc, argv, optstring, options, &optindex)))
 	{
 		switch (res)
@@ -55,7 +57,9 @@ void getopt_long_func(int argc, char* argv[])
 				fprintf(stderr, "--version\n");
 				break;
 			case 'i':
-				fprintf(stderr, "--i %d\n", *optarg);
+				fprintf(stderr, "%s\n", optarg);
+				sscanf(optarg, "%d", &i);
+				fprintf(stderr, "--i %d\n", i);
 				break;
 			case 'n':
 				fprintf(stderr, "--name %s\n", optarg);
@@ -66,6 +70,7 @@ void getopt_long_func(int argc, char* argv[])
 				break;
 		}
 	}
+
 	return flag;
 }
 
