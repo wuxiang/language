@@ -16,6 +16,7 @@
 #include <netinet/in.h>
 #include <fcntl.h>
 #include <stdbool.h>
+#include <stdint.h>
 
 #include <protocol_binary.h>
 
@@ -33,9 +34,14 @@ struct testcase {
 struct addrinfo *lookuphost(const char *hostname, in_port_t port)
 {
     struct addrinfo *ai = 0;
-    struct addrinfo hints = { .ai_family = AF_UNSPEC,
-                              .ai_protocol = IPPROTO_TCP,
-                              .ai_socktype = SOCK_STREAM };
+//    struct addrinfo hints = { .ai_family = AF_UNSPEC,
+//                              .ai_protocol = IPPROTO_TCP,
+//                              .ai_socktype = SOCK_STREAM };
+    struct addrinfo hints;
+	bzero(&hints, sizeof(struct addrinfo));
+	hints.ai_family = AF_UNSPEC;
+    hints.ai_protocol = IPPROTO_TCP;
+    hints.ai_socktype = SOCK_STREAM;
     char service[NI_MAXSERV];
     int error;
 
@@ -89,7 +95,7 @@ off_t raw_command(char* buf,
                          const void* dta,
                          size_t dtalen) {
     /* all of the storage commands use the same command layout */
-    protocol_binary_request_no_extras *request = (void*)buf;
+    protocol_binary_request_no_extras *request = (protocol_binary_request_no_extras *)buf;
     assert(bufsz > sizeof(*request) + keylen + dtalen);
 
     memset(request, 0, sizeof(*request));
@@ -216,8 +222,9 @@ static bool safe_recv(void *buf, size_t len) {
         ssize_t nr = read(sock, ((char*)buf) + offset, len - offset);
         if (nr == -1) {
             if (errno != EINTR) {
-                fprintf(stderr, "Failed to read: %s\n", strerror(errno));
-                abort();
+                fprintf(stderr, "%d Failed to read: %s\n", __LINE__, strerror(errno));
+				sleep(1);
+                //abort();
             }
         } else {
             if (nr == 0 && allow_closed_read) {
@@ -232,7 +239,7 @@ static bool safe_recv(void *buf, size_t len) {
 }
 
 bool safe_recv_packet(void *buf, size_t size) {
-    protocol_binary_response_no_extras *response = buf;
+    protocol_binary_response_no_extras *response = (protocol_binary_response_no_extras *)buf;
     assert(size > sizeof(*response));
     if (!safe_recv(response, sizeof(*response))) {
         return false;
@@ -243,7 +250,7 @@ bool safe_recv_packet(void *buf, size_t size) {
 
     size_t len = sizeof(*response);
 
-    char *ptr = buf;
+    char *ptr = (char*)buf;
     ptr += len;
     if (!safe_recv(ptr, response->message.header.response.bodylen)) {
         return false;
@@ -271,7 +278,7 @@ bool safe_recv_packet(void *buf, size_t size) {
 void safe_send(const void* buf, size_t len, bool hickup)
 {
     off_t offset = 0;
-    const char* ptr = buf;
+    const char* ptr = (char*)buf;
 #ifdef MESSAGE_DEBUG
     uint8_t val = *ptr;
     assert(val == (uint8_t)0x80);
@@ -298,8 +305,9 @@ void safe_send(const void* buf, size_t len, bool hickup)
         ssize_t nw = write(sock, ptr + offset, num_bytes);
         if (nw == -1) {
             if (errno != EINTR) {
-                fprintf(stderr, "Failed to write: %s\n", strerror(errno));
-                abort();
+                fprintf(stderr, "%d Failed to write: %s\n", __LINE__, strerror(errno));
+				sleep(1);
+                //abort();
             }
         } else {
             if (hickup) {
@@ -329,7 +337,6 @@ enum test_return test_binary_noop(void) {
     return TEST_PASS;
 }
 
-
 off_t storage_command(char*buf,
                              size_t bufsz,
                              uint8_t cmd,
@@ -340,7 +347,7 @@ off_t storage_command(char*buf,
                              uint32_t flags,
                              uint32_t exp) {
     /* all of the storage commands use the same command layout */
-    protocol_binary_request_set *request = (void*)buf;
+    protocol_binary_request_set *request = (protocol_binary_request_set*)buf;
     assert(bufsz > sizeof(*request) + keylen + dtalen + 8);
 
     memset(request, 0, sizeof(*request));
@@ -364,20 +371,34 @@ off_t storage_command(char*buf,
 }
 
 enum test_return test_binary_set_impl(const char *key, uint8_t cmd) {
+	fprintf(stderr, "test_binary_set_impl\n");
     union {
         protocol_binary_request_no_extras request;
         protocol_binary_response_no_extras response;
         char bytes[1024];
     } send, receive;
+	bzero(send.bytes, 1024);
+	bzero(receive.bytes,1024);
 	char* value = {"world\r\n"};
     //uint64_t value = 0xdeadbeefdeadcafe;
     size_t len = storage_command(send.bytes, sizeof(send.bytes), cmd,
-                                 key, strlen(key), &value, strlen(value),/*sizeof(value),*/
+                                 key, strlen(key), value, strlen(value),/*sizeof(value),*/
                                  0, 0);
 
     /* Set should work over and over again */
     //int ii;
     //for (ii = 0; ii < 10; ++ii) {
+	char  byte1[1024] = {};
+	char  byte2[1024] = {};
+	int offset = sizeof(protocol_binary_request_no_extras) + send.request.message.header.request.extlen;
+	int nkeylen = ntohs(send.request.message.header.request.keylen);
+	memcpy(byte1, send.bytes + offset, nkeylen);
+	offset += nkeylen;
+
+	int nvaluelen = ntohl(send.request.message.header.request.bodylen);
+	memcpy(byte2, send.bytes +  offset, nvaluelen - 8 - nkeylen);
+
+	fprintf(stderr, "key:%s, value:%s\n", byte1, byte2);
         safe_send(send.bytes, len, false);
         if (cmd == PROTOCOL_BINARY_CMD_SET) {
             safe_recv_packet(receive.bytes, sizeof(receive.bytes));
@@ -405,11 +426,15 @@ enum test_return test_binary_set_impl(const char *key, uint8_t cmd) {
 }
 
 static enum test_return test_binary_get_impl(const char *key, uint8_t cmd) {
+	fprintf(stderr, "test_binary_get_impl\n");
     union {
         protocol_binary_request_no_extras request;
         protocol_binary_response_no_extras response;
         char bytes[1024];
     } send, receive;
+
+	bzero(send.bytes, 1024);
+	bzero(receive.bytes, 1024);
     size_t len = raw_command(send.bytes, sizeof(send.bytes), cmd,
                              key, strlen(key), NULL, 0);
 
@@ -424,6 +449,13 @@ static enum test_return test_binary_get_impl(const char *key, uint8_t cmd) {
 	char* value = receive.bytes + sizeof(protocol_binary_response_no_extras) +
 				receive.response.message.header.response.keylen +
 				receive.response.message.header.response.extlen;
+	char  byte1[1024] = {};
+	memcpy(byte1, receive.bytes + sizeof(protocol_binary_response_no_extras) +
+							receive.response.message.header.response.keylen +
+							receive.response.message.header.response.extlen,
+							receive.response.message.header.response.bodylen
+							);
+
 	fprintf(stderr, "get value: %s\n", value);
 
     //len = storage_command(send.bytes, sizeof(send.bytes),
@@ -461,7 +493,6 @@ static enum test_return test_binary_get_impl(const char *key, uint8_t cmd) {
 
 enum test_return test_binary_set(void) {
     return test_binary_set_impl("hello", PROTOCOL_BINARY_CMD_SET);
-    //return test_binary_set_impl("test_binary_set", PROTOCOL_BINARY_CMD_SET);
 }
 
 static enum test_return test_binary_get(void) {
@@ -476,7 +507,7 @@ struct testcase testcases[] = {
 
 int main(int argc, char* argv[])
 {
-	sock = connect_server("127.0.0.1", 11211, true);
+	sock = connect_server("10.15.107.61", 11211, true);
     int exitcode = 0;
     int ii = 0, num_cases = 0;
 
