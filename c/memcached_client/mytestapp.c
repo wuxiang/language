@@ -34,6 +34,9 @@ struct testcase {
 struct addrinfo *lookuphost(const char *hostname, in_port_t port)
 {
     struct addrinfo *ai = 0;
+//    struct addrinfo hints = { .ai_family = AF_UNSPEC,
+//                              .ai_protocol = IPPROTO_TCP,
+//                              .ai_socktype = SOCK_STREAM };
     struct addrinfo hints;
 	bzero(&hints, sizeof(struct addrinfo));
 	hints.ai_family = AF_UNSPEC;
