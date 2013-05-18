@@ -379,7 +379,7 @@ enum test_return test_binary_set_impl(const char *key, uint8_t cmd) {
     } send, receive;
 	bzero(send.bytes, 1024);
 	bzero(receive.bytes,1024);
-	char* value = {"world\r\n"};
+	const char* value = {"world\r\n"};
     //uint64_t value = 0xdeadbeefdeadcafe;
     size_t len = storage_command(send.bytes, sizeof(send.bytes), cmd,
                                  key, strlen(key), value, strlen(value),/*sizeof(value),*/
@@ -507,7 +507,7 @@ struct testcase testcases[] = {
 
 int main(int argc, char* argv[])
 {
-	sock = connect_server("10.15.107.61", 11211, true);
+	sock = connect_server("127.0.0.1", 11211, true);
     int exitcode = 0;
     int ii = 0, num_cases = 0;
 
