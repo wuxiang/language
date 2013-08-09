@@ -1,5 +1,6 @@
 #include <iostream>
 
+//***********************first situation##############################
 template<typename T>
 class base
 {
@@ -58,6 +59,17 @@ class dr: public base<T>
 	private:
 		T   mem;
 };
+
+//*************************************second situation########################
+//class fun
+//{
+//	public:
+//		template<typename T>
+//		virtual  T  test(const T& t)
+//		{
+//			return t;
+//		}
+//};
 
 int main()
 {
