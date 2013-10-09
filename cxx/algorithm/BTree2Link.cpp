@@ -19,6 +19,23 @@ public:
 	}
 };
 
+template<typename _T>
+class LinkNode
+{
+public:
+	_T   sh;
+	LinkNode<_T>* next;
+
+	LinkNode(): next(NULL)
+	{
+	}
+
+	LinkNode(const _T& val): sh(sh), next(NULL)
+	{
+	}
+};
+
+
 LinkNode<int>*  pHead;
 LinkNode<int>*  pCur;
 
@@ -28,15 +45,26 @@ void exchange(BNode<_T>* node)
 	if (!pHead)
 	{
 		pHead = pCur = new LinkNode<_T>(node->data);
+		pHead->sh = node->data;
+		pHead->next = NULL;
 		return;
 	}
 
 	pCur->next = new LinkNode<_T>(node->data);
+	pCur->next->sh = node->data;
+	pCur->next->next = NULL;
 	pCur = pCur->next;
 }
 
-void printNode()
+void printLinkNode()
 {
+	pCur = pHead;
+	while (pCur)
+	{
+		fprintf(stderr, "%d, ", pCur->sh);
+		pCur = pCur->next;
+	}
+	fprintf(stderr, "\n");
 }
 
 template<typename _T>
@@ -123,6 +151,11 @@ class BTree
 			printf("\n");
 		}
 
+		void charge()
+		{
+			aftOrder(m_head, &exchange);
+		}
+
 	private:
 		void midOrder(BNode<_T>* node, void (*func)(BNode<_T>*))
 		{
@@ -164,23 +197,9 @@ class BTree
 		BNode<_T>*  m_head;
 };
 
-template<typename _T>
-class LinkNode
-{
-	_T   sh;
-	LinkNode<_T>* next;
-
-	LinkNode(): next(NULL)
-	{
-	}
-
-	LinkNode(const _T& val): sh(sh), next(NULL)
-	{
-	}
-};
-
 int main()
 {
+	pHead = pCur = NULL;
 	srand(time(0));
 	BTree<int>  tmp;
 	for (int i = 0; i < 10; ++i)
@@ -188,5 +207,8 @@ int main()
 		tmp.insert(random() % 100);
 	}
 	tmp.print();
+
+	tmp.charge();
+	printLinkNode();
 	return 0;
 }
