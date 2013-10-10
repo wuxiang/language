@@ -1,3 +1,9 @@
+/*******************************************************
+**
+**make a experiment, the effective between string operator== and strcmp
+**result string operator== is 3.4 times faster than strcmp
+**
+********************************************************/
 #include <iostream>
 #include <set>
 #include <string>
