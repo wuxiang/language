@@ -1,3 +1,9 @@
+/***************************************************************
+ * *
+ * * make comment: the effective between string set and text
+ * * use set is more effective than strcasestr(str), 3 times
+ * *
+ * ************************************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/time.h>
