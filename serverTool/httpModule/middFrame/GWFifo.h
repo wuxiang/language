@@ -23,6 +23,7 @@ public:
 
 	bool push(HttpReqMsg*  req);
 	HttpReqMsg*  getFront();
+	HttpReqMsg*  getAndPopFront();
 	bool  popFront();
 
 	bool  is_empty();

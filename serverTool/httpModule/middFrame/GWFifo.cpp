@@ -12,7 +12,7 @@ GWFifo::~GWFifo()
 {
 }
 
-bool GWFifo::push(HttpReqMsg*  req);
+bool GWFifo::push(HttpReqMsg*  req)
 {
 	GW_unique_lock  lock(m_mtx);
 	m_deqt.push_back(req);
@@ -28,6 +28,20 @@ HttpReqMsg*  GWFifo::getFront()
 	}
 
 	return m_deqt.front();
+}
+
+HttpReqMsg*  GWFifo::getAndPopFront()
+{
+	GW_unique_lock  lock(m_mtx);
+	if (m_deqt.empty())
+	{
+		return NULL;
+	}
+
+	HttpReqMsg* ptr = m_deqt.front();
+	m_deqt.pop_front();
+
+	return ptr;
 }
 
 bool  GWFifo::popFront()
