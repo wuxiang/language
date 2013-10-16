@@ -107,6 +107,8 @@ void HttpReqHandle::threadWork(void)
 		nfds = epoll_wait(m_epfd, events, EPOLLHINT, 20);
 		eventHandler(events, nfds);
 
+		checkTimeout();
+
 		if (!taskExit)
 		{
 			usleep(20000);
@@ -132,7 +134,7 @@ void HttpReqHandle::eventHandler(struct epoll_event* nEvents, int nfds)
 				if (nEvents[i].data.fd != it->second.fd)
 				{
 					epoll_ctl(m_epfd, EPOLL_CTL_DEL, nEvents[i].data.fd, NULL);
-					it->second.pReq->m_ret = RES_FAILED;
+					(it->second.pReq)->m_ret = RES_FAILED;
 					g_res_list.push(it->second.pReq);
 					m_wait_list.erase(it);
 
@@ -147,7 +149,7 @@ void HttpReqHandle::eventHandler(struct epoll_event* nEvents, int nfds)
 					if (ret < 0)
 					{
 						epoll_ctl(m_epfd, EPOLL_CTL_DEL, nEvents[i].data.fd, NULL);
-						it->second.pReq->m_ret = RES_FAILED;
+						(it->second.pReq)->m_ret = RES_FAILED;
 						g_res_list.push(it->second.pReq);
 						m_wait_list.erase(it);
 
@@ -161,6 +163,57 @@ void HttpReqHandle::eventHandler(struct epoll_event* nEvents, int nfds)
 					}
 					else
 					{
+						int dataLen = 0;
+						char* pData = NULL;
+
+						char* pPosLen = strstr(it->second.rBuf,"Content-Length: ");
+						if (pPosLen)
+						{
+							dataLen = atoi(pPosLen + strlen("Content-Length: "));
+							pData = strstr(it->second.rBuf, "\r\n\r\n") + strlen("\r\n\r\n");
+						}
+						else
+						{
+							char* pPosEncode = strstr(it->second.rBuf, "Transfer-Encoding: chunked");
+							if (pPosEncode)
+							{
+								char* pCRLF = strstr(it->second.rBuf, "\r\n\r\n");
+								dataLen = HttpUtil::Hex2Int(pCRLF + strlen("\r\n\r\n"));
+								pData = strstr((pCRLF + strlen("\r\n\r\n")), "\r\n") + strlen("\r\n");
+							}
+						}
+
+						if (!pData || 0 == dataLen)
+						{
+							continue;
+						}
+
+
+						if (strlen(pData) > dataLen)
+						{
+							epoll_ctl(m_epfd, EPOLL_CTL_DEL, nEvents[i].data.fd, NULL);
+							(it->second.pReq)->m_ret = RES_FAILED;
+							g_res_list.push(it->second.pReq);
+							m_wait_list.erase(it);
+
+							close(nEvents[i].data.fd);
+							--m_reqInNetInterface;
+							continue;
+						}
+
+						(it->second.pReq)->m_length = dataLen;
+						(it->second.pReq)->m_data = new char[dataLen + 1];
+						memcpy((it->second.pReq)->m_data, pData, strlen(pData));
+						if (dataLen == strlen(pData))
+						{
+							epoll_ctl(m_epfd, EPOLL_CTL_DEL, nEvents[i].data.fd, NULL);
+							(it->second.pReq)->m_ret = RES_OK;
+							g_res_list.push(it->second.pReq);
+							m_wait_list.erase(it);
+
+							close(nEvents[i].data.fd);
+							--m_reqInNetInterface;
+						}
 					}
 				}
 				else // recv http body
@@ -169,7 +222,7 @@ void HttpReqHandle::eventHandler(struct epoll_event* nEvents, int nfds)
 					if (ret < 0)
 					{
 						epoll_ctl(m_epfd, EPOLL_CTL_DEL, nEvents[i].data.fd, NULL);
-						it->second.pReq->m_ret = RES_FAILED;
+						(it->second.pReq)->m_ret = RES_FAILED;
 						g_res_list.push(it->second.pReq);
 						m_wait_list.erase(it);
 
@@ -183,6 +236,16 @@ void HttpReqHandle::eventHandler(struct epoll_event* nEvents, int nfds)
 					}
 					else
 					{
+						if ((it->second.pReq)->m_length == strlen((it->second.pReq)->m_data))
+						{
+							epoll_ctl(m_epfd, EPOLL_CTL_DEL, nEvents[i].data.fd, NULL);
+							(it->second.pReq)->m_ret = RES_OK;
+							g_res_list.push(it->second.pReq);
+							m_wait_list.erase(it);
+
+							close(nEvents[i].data.fd);
+							--m_reqInNetInterface;
+						}
 					}
 				}
 			}
@@ -193,6 +256,30 @@ void HttpReqHandle::eventHandler(struct epoll_event* nEvents, int nfds)
 				--m_reqInNetInterface;
 			}
 		}
+		else
+		{
+			epoll_ctl(m_epfd, EPOLL_CTL_DEL, nEvents[i].data.fd, NULL);
+			close(nEvents[i].data.fd);
+			--m_reqInNetInterface;
+		}
+	}
+}
+
+void HttpReqHandle::checkTimeout()
+{
+	std::map<int, Metadata4HttpReq>::iterator it = m_wait_list.begin();
+	while (it != m_wait_list.end())
+	{
+		if ((time(0) - it->second.tStart) > (it->second.pReq)->m_timeout)
+		{
+			epoll_ctl(m_epfd, EPOLL_CTL_DEL, it->second.fd, NULL);
+			(it->second.pReq)->m_ret = RES_FAILED;
+			g_res_list.push(it->second.pReq);
+			m_wait_list.erase(it++);
+			continue;
+		}
+
+		++it;
 	}
 }
 

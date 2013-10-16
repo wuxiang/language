@@ -20,6 +20,7 @@ public:
 
 private:
 	void eventHandler(struct epoll_event* events, int nfds);
+	void checkTimeout();
 
 private:
 	int  m_epfd;
