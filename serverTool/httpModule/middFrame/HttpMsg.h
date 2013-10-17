@@ -70,6 +70,8 @@ public:
 			m_length = 0;
 			m_data = NULL;
 		}
+
+		return *this;
 	}
 
 	~HttpReqMsg()
@@ -107,6 +109,8 @@ public:
 		tStart = req.tStart;
 		fd = req.fd;
 		pReq = req.pReq;
+
+		return *this;
 	}
 
 	~Metadata4HttpReq()

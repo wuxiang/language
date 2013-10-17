@@ -36,7 +36,7 @@ inline long long mstime(void)
 inline int Hex2Int(const char* str)
 {
     int nResult = 0;
-    while (*str!='\0')
+    while (*str != '\0')
     {
         switch (*str)
         {
@@ -67,7 +67,7 @@ inline int HttpSend(int& socket, char *Buf,int len)
 		return -1;
 	}
 
-    while ( ret = send(socket, &Buf[pos], len, 0))
+    while ( (ret = send(socket, &Buf[pos], len, 0)))
     {
         if (ret == len)
 		{

@@ -8,8 +8,10 @@
 int main()
 {
 	HttpReqMsg* pMsg = new HttpReqMsg();
-	pMsg->m_timeout = 10;
-	strcpy(pMsg->m_url, "http://www.baidu.com/");
+	pMsg->m_timeout = 20;
+	strcpy(pMsg->m_url, "http://www.baidu.com/img/bdlogo.gif");
+	//strcpy(pMsg->m_url, "http://www.sina.com.cn/index.html");
+	//strcpy(pMsg->m_url, "http://www.baidu.com/");
 	pMsg->m_type = REQ_GET;
 	g_req_list.push(pMsg);
 
@@ -21,7 +23,7 @@ int main()
 		exit(0);
 	}
 
-	sleep(15);
+	sleep(20);
 
 	HttpReqMsg* ptr = g_res_list.getAndPopFront();
 	if (ptr)
