@@ -2,7 +2,7 @@
 #define HTTP_CONST_H_
 #include "GWFifo.h"
 
-const size_t THETASKOFNUMBER = 1000;
+const size_t THETASKOFNUMBER = 5;
 const size_t EPOLLHINT = 1024;
 
 typedef enum {
@@ -17,5 +17,6 @@ typedef enum {
 
 extern  GWFifo    g_req_list;
 extern  GWFifo    g_res_list;
+extern int  tTime;
 
 #endif //HTTP_CONST_H_

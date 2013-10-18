@@ -10,7 +10,7 @@ public:
 	uint8_t    m_type;
 	char       m_param[4096];
 	uint8_t    m_ret;
-	uint32_t   m_length;
+	int        m_length;
 	char*      m_data;
 
 	HttpReqMsg(): m_timeout(0), m_type(0), m_ret(0), m_length(0), m_data(NULL)
@@ -33,15 +33,16 @@ public:
 
 		m_ret = req.m_ret;
 
-		if (req.m_data)
+		if (req.m_data && m_length)
 		{
-			m_length = strlen(req.m_data);
+			m_length = req.m_length;
 			m_data = new char[m_length + 1];
 			memcpy(m_data, req.m_data, m_length);
 		}
 		else
 		{
 			m_length = 0;
+			m_data = NULL;
 		}
 	}
 
@@ -59,9 +60,9 @@ public:
 
 		m_ret = req.m_ret;
 
-		if (req.m_data)
+		if (req.m_data && m_length)
 		{
-			m_length = strlen(req.m_data);
+			m_length = req.m_length;
 			m_data = new char[m_length + 1];
 			memcpy(m_data, req.m_data, m_length);
 		}
@@ -86,9 +87,10 @@ public:
 	char   rBuf[4096];
 	uint32_t   tStart;
 	int  fd;
+	int  bufPos;
 	HttpReqMsg*  pReq;
 
-	Metadata4HttpReq(): tStart(0), fd(-1), pReq(NULL)
+	Metadata4HttpReq(): tStart(0), fd(-1), bufPos(0), pReq(NULL)
 	{
 		bzero(rBuf, 4096);
 	}
@@ -96,18 +98,20 @@ public:
 	Metadata4HttpReq(const Metadata4HttpReq& req)
 	{
 		bzero(rBuf, 4096);
-		memcpy(rBuf, req.rBuf, strlen(req.rBuf));
+		memcpy(rBuf, req.rBuf, 4096);
 		tStart = req.tStart;
 		fd = req.fd;
+		bufPos = req.bufPos;
 		pReq = req.pReq;
 	}
 
 	Metadata4HttpReq& operator=(const Metadata4HttpReq& req)
 	{
 		bzero(rBuf, 4096);
-		memcpy(rBuf, req.rBuf, strlen(req.rBuf));
+		memcpy(rBuf, req.rBuf, 4096);
 		tStart = req.tStart;
 		fd = req.fd;
+		bufPos = req.bufPos;
 		pReq = req.pReq;
 
 		return *this;

@@ -109,9 +109,9 @@ inline int HttpSend(int& socket, char *Buf,int len)
     return pos;
 }
 
-inline int Recv(int& socket, char *Buf, int len)
+inline int Recv(int& socket, char *Buf, int& pos, int len)
 {
-	int pos = strlen(Buf);
+	fprintf(stderr, "\nstart position: %d\n", pos);
 	int length = recv(socket , &Buf[pos] , len - pos , 0 );
 
 	if (length == 0)
@@ -138,9 +138,10 @@ inline int Recv(int& socket, char *Buf, int len)
 	else
 	{
 		pos += length;
+		fprintf(stderr, "\nafter read: length==>%d, pos==>%d\n", length, pos);
 	}
 
-	return pos;
+	return length;
 }
 
 }

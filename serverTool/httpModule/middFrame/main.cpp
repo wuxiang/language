@@ -7,13 +7,22 @@
 
 int main()
 {
-	HttpReqMsg* pMsg = new HttpReqMsg();
-	pMsg->m_timeout = 20;
-	strcpy(pMsg->m_url, "http://www.baidu.com/img/bdlogo.gif");
+	//HttpReqMsg* pMsg = new HttpReqMsg();
+	//pMsg->m_timeout = 20;
+	//strcpy(pMsg->m_url, "http://www.baidu.com/img/bdlogo.gif");
 	//strcpy(pMsg->m_url, "http://www.sina.com.cn/index.html");
 	//strcpy(pMsg->m_url, "http://www.baidu.com/");
-	pMsg->m_type = REQ_GET;
-	g_req_list.push(pMsg);
+	for (int i = 1; i <= 1; ++i)
+	{
+		HttpReqMsg* pMsg = new HttpReqMsg();
+		pMsg->m_timeout = 20;
+		sprintf(pMsg->m_url, "http://news.baidu.com/n?cmd=4&class=civilnews&pn=%d&sub=0", i);
+		//strcpy(pMsg->m_url, "http://www.sina.com.cn/index.html");
+		//strcpy(pMsg->m_url, "http://www.baidu.com/");
+		fprintf(stderr, "%s\n", pMsg->m_url);
+		pMsg->m_type = REQ_GET;
+		g_req_list.push(pMsg);
+	}
 
 	HttpReqHandle* pHandle = new HttpReqHandle();
 	pthread_t id;
@@ -23,25 +32,40 @@ int main()
 		exit(0);
 	}
 
-	sleep(20);
+	sleep(30);
 
-	HttpReqMsg* ptr = g_res_list.getAndPopFront();
-	if (ptr)
+	int idxSucc = 0;
+	int idxFailed = 0;
+	int tryTime = 0;
+	while (true)
 	{
-		if (ptr->m_ret == RES_OK)
+		HttpReqMsg* ptr = g_res_list.getAndPopFront();
+		if (ptr)
 		{
-			fprintf(stdout, "\n%s\n", ptr->m_data);
+			if (ptr->m_ret == RES_OK)
+			{
+				++idxSucc;
+				//fprintf(stdout, "\n%s\n", ptr->m_data);
+				fprintf(stderr, "\nhandle message success\n");
+			}
+			else
+			{
+				++idxFailed;
+				fprintf(stderr, "\nhandle message failed\n");
+			}
 		}
 		else
 		{
-			fprintf(stderr, "\nhandle message failed\n");
+			++tryTime;
+			if (tryTime == 3)
+			{
+				break;
+			}
+			usleep(1000000);
 		}
 	}
-	else
-	{
-		fprintf(stderr, "get NULL ptr");
-	}
 
+	fprintf(stderr, "\ntotal task: 20, success: %d, failed: %d\n", idxSucc, idxFailed);
 	fprintf(stderr, "\nmain thread exiting\n");
 	return 0;
 }

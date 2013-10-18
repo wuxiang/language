@@ -118,9 +118,9 @@ void HttpReqHandle::threadWork(void)
 
 void HttpReqHandle::eventHandler(struct epoll_event* nEvents, int nfds)
 {
-	fprintf(stderr, "%s, fds: %d\n", __FUNCTION__, nfds);
 	for (int i = 0; i < nfds; ++i)
 	{
+		++tTime;
 		if (nEvents[i].data.fd == -1)
 		{
 			--m_reqInNetInterface;
@@ -146,9 +146,11 @@ void HttpReqHandle::eventHandler(struct epoll_event* nEvents, int nfds)
 
 				if (!((it->second.pReq)->m_data) || 0 == ((it->second.pReq)->m_length)) // recv http header
 				{
-					int ret = HttpUtil::Recv(nEvents[i].data.fd, it->second.rBuf, 4096);
+					int ret = HttpUtil::Recv(nEvents[i].data.fd, it->second.rBuf, it->second.bufPos, 4095);
+					fprintf(stderr, "\nseri(%d): %d\n", tTime, it->second.bufPos);
 					if (ret < 0)
 					{
+						fprintf(stderr, "\nseri(%d)\n", tTime);
 						epoll_ctl(m_epfd, EPOLL_CTL_DEL, nEvents[i].data.fd, NULL);
 						(it->second.pReq)->m_ret = RES_FAILED;
 						g_res_list.push(it->second.pReq);
@@ -164,7 +166,7 @@ void HttpReqHandle::eventHandler(struct epoll_event* nEvents, int nfds)
 					}
 					else
 					{
-						size_t dataLen = 0;
+						int dataLen = 0;
 						char* pData = NULL;
 
 						char* pPosLen = strstr(it->second.rBuf,"Content-Length: ");
@@ -199,8 +201,10 @@ void HttpReqHandle::eventHandler(struct epoll_event* nEvents, int nfds)
 							continue;
 						}
 
-						if (strlen(pData) > dataLen)
+						fprintf(stderr, "\nseri(%d) data len: %d, recv len1: %d\n", tTime, dataLen, (&((it->second.rBuf)[it->second.bufPos]) - pData));
+						if ((&((it->second.rBuf)[it->second.bufPos]) - pData) > dataLen)
 						{
+							fprintf(stderr, "\nseri(%d) exception\n", tTime);
 							epoll_ctl(m_epfd, EPOLL_CTL_DEL, nEvents[i].data.fd, NULL);
 							(it->second.pReq)->m_ret = RES_FAILED;
 							g_res_list.push(it->second.pReq);
@@ -211,17 +215,15 @@ void HttpReqHandle::eventHandler(struct epoll_event* nEvents, int nfds)
 							continue;
 						}
 
-						fprintf(stderr, "accept len: %d, %d\n", strlen(it->second.rBuf), strlen(pData));
 						(it->second.pReq)->m_length = dataLen;
 						(it->second.pReq)->m_data = new char[dataLen + 1];
-						memcpy((it->second.pReq)->m_data, pData, strlen(pData));
-						fprintf(stderr, "\nfirst:dataLen = %d, strlen(m_data) = %d\n", dataLen, strlen((it->second.pReq)->m_data));
-						if (dataLen > strlen(pData))
+						memcpy((it->second.pReq)->m_data, pData, &(it->second.rBuf[it->second.bufPos]) - pData);
+						it->second.bufPos = &(it->second.rBuf[it->second.bufPos]) - pData;
+						if (dataLen > it->second.bufPos)
 						{
-							fprintf(stderr, "\nrecv 1\n");
-							if (HttpUtil::Recv(nEvents[i].data.fd, (it->second.pReq)->m_data, (it->second.pReq)->m_length) < 0)
+							if (HttpUtil::Recv(nEvents[i].data.fd, (it->second.pReq)->m_data, it->second.bufPos, (it->second.pReq)->m_length) < 0)
 							{
-								fprintf(stderr, "recv error\n");
+								fprintf(stderr, "\nseri(%d) recv error\n", tTime);
 								epoll_ctl(m_epfd, EPOLL_CTL_DEL, nEvents[i].data.fd, NULL);
 								(it->second.pReq)->m_ret = RES_FAILED;
 								g_res_list.push(it->second.pReq);
@@ -231,13 +233,12 @@ void HttpReqHandle::eventHandler(struct epoll_event* nEvents, int nfds)
 								--m_reqInNetInterface;
 								continue;
 							}
+							fprintf(stderr, "\nseri(%d) dataLen: %d, real len2: %d\n", tTime, it->second.pReq->m_length, it->second.bufPos);
+							//fprintf(stderr, "\n|%c||%c||%c||%c||%c|\n", it->second.pReq->m_data[0], it->second.pReq->m_data[3521], it->second.pReq->m_data[3522], it->second.pReq->m_data[10968], it->second.pReq->m_data[10969]);
 						}
 
-						fprintf(stderr, "\ndataLen: %d, real length: %d\n", dataLen, strlen(it->second.pReq->m_data));
-						fprintf(stdout, "\n%s\n", it->second.pReq->m_data);
-						if (dataLen == strlen(pData))
+						if (dataLen == it->second.bufPos)
 						{
-							fprintf(stderr, "process task success!!!\n");
 							epoll_ctl(m_epfd, EPOLL_CTL_DEL, nEvents[i].data.fd, NULL);
 							(it->second.pReq)->m_ret = RES_OK;
 							g_res_list.push(it->second.pReq);
@@ -250,11 +251,10 @@ void HttpReqHandle::eventHandler(struct epoll_event* nEvents, int nfds)
 				}
 				else // recv http body
 				{
-					fprintf(stderr, "\nrecv 2\n");
-					int ret = HttpUtil::Recv(nEvents[i].data.fd, (it->second.pReq)->m_data, (it->second.pReq)->m_length);
+					int ret = HttpUtil::Recv(nEvents[i].data.fd, (it->second.pReq)->m_data, it->second.bufPos, (it->second.pReq)->m_length);
 					if (ret < 0)
 					{
-						fprintf(stderr, "accept error recv 2\n");
+						fprintf(stderr, "seri(%d) recv error", tTime);
 						epoll_ctl(m_epfd, EPOLL_CTL_DEL, nEvents[i].data.fd, NULL);
 						(it->second.pReq)->m_ret = RES_FAILED;
 						g_res_list.push(it->second.pReq);
@@ -270,10 +270,9 @@ void HttpReqHandle::eventHandler(struct epoll_event* nEvents, int nfds)
 					}
 					else
 					{
-						fprintf(stderr, "\nsecond: dataLen = %d, strlen = %d\n", (it->second.pReq)->m_length, strlen((it->second.pReq)->m_data));
-						if ((it->second.pReq)->m_length == strlen((it->second.pReq)->m_data))
+						fprintf(stderr, "\nseri(%d) dataLen: %d, real len3: %d\n", tTime, (it->second.pReq)->m_length, it->second.bufPos);
+						if ((it->second.pReq)->m_length == it->second.bufPos)
 						{
-							fprintf(stderr, "process task success!!!\n");
 							epoll_ctl(m_epfd, EPOLL_CTL_DEL, nEvents[i].data.fd, NULL);
 							(it->second.pReq)->m_ret = RES_OK;
 							g_res_list.push(it->second.pReq);
@@ -282,7 +281,6 @@ void HttpReqHandle::eventHandler(struct epoll_event* nEvents, int nfds)
 							close(nEvents[i].data.fd);
 							--m_reqInNetInterface;
 						}
-						fprintf(stdout, "\n%s\n", it->second.pReq->m_data);
 					}
 				}
 			}
@@ -309,7 +307,7 @@ void HttpReqHandle::checkTimeout()
 	{
 		if ((time(0) - it->second.tStart) > (it->second.pReq)->m_timeout)
 		{
-			fprintf(stderr, "timeout: %d\n", (it->second.pReq)->m_timeout);
+			fprintf(stderr, "timeout\n");
 			epoll_ctl(m_epfd, EPOLL_CTL_DEL, it->second.fd, NULL);
 			(it->second.pReq)->m_ret = RES_FAILED;
 			g_res_list.push(it->second.pReq);
