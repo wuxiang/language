@@ -16,8 +16,10 @@ int main()
 	{
 		HttpReqMsg* pMsg = new HttpReqMsg();
 		pMsg->m_timeout = 20;
-		sprintf(pMsg->m_url, "http://news.baidu.com/n?cmd=4&class=civilnews&pn=%d&sub=0", i);
-		//strcpy(pMsg->m_url, "http://www.sina.com.cn/index.html");
+		//sprintf(pMsg->m_url, "http://news.baidu.com/n?cmd=4&class=civilnews&pn=%d&sub=0", i);
+		//strcpy(pMsg->m_url, "http://www.baidu.com/img/bdlogo.gif");
+		//strcpy(pMsg->m_url, "http://www.163.com/index.html");
+		strcpy(pMsg->m_url, "http://www.sina.com.cn/index.html");
 		//strcpy(pMsg->m_url, "http://www.baidu.com/");
 		fprintf(stderr, "%s\n", pMsg->m_url);
 		pMsg->m_type = REQ_GET;
