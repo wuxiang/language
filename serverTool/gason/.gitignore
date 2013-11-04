@@ -1,0 +1,8 @@
+.DS_Store
+*.swp
+build
+debug
+release
+test
+vjson
+sajson
