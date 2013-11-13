@@ -27,26 +27,51 @@ void revert(struct node*& head)
 	head = pHead;
 }
 
+struct node*  revertRecur(struct node*& first, struct node* head)
+{
+	if (!head || !head->next)
+	{
+		first = head;
+		return head;
+	}
+	struct node* pTmp = head;
+
+	struct node* pNode = revertRecur(first, head->next);
+	pNode->next = pTmp;
+	pTmp->next = NULL;
+
+	return  pTmp;
+}
+
 int main()
 {
-	struct node* head = new node();
-	head->value = 88;
-	head->next = NULL;
-	struct node* pos = head;
+	struct node* head = NULL;
+	struct node* pos = NULL;
 	for (int i = 0; i < 10; ++i)
 	{
 		struct node* pV = new node;
 		pV->value = i;
 		pV->next = NULL;
-		pos->next = pV;
-		pos = pV;
+
+		if (!head)
+		{
+			head = pV;
+			pos = head;
+		}
+		else
+		{
+			pos->next = pV;
+			pos = pos->next;
+		}
 	}
 
-	revert(head);
+	//revert(head);
+	revertRecur(head, head);
 
 	while (head)
 	{
-		printf("%d, %p\t", head->value, head->next);
+		//printf("%d\t"/*, %p\t*/, head->value/*, head->next*/);
+		fprintf(stderr, "%d, %p\t\n", head->value, head/*->next*/);
 		head = head->next;
 	}
 	printf("\n");
