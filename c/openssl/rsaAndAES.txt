@@ -1,0 +1,118 @@
+RSA加解密需要先用openssl工具生成RSA公钥和RSA私钥。方法：
+1、产生私钥：openssl genrsa -out privkey.pem 1024；
+2、根据私钥产生公钥：openssl rsa -in privkey.pem -pubout。
+1024只是测试用，使用2048位才比较安全。
+
+RSA加密部分代码demo：
+std::string EncodeRSAKeyFile( const std::string& strPemFileName, const std::string& strData )
+{
+        if (strPemFileName.empty() || strData.empty())
+        {
+            assert(false);
+            return "";
+        }
+        FILE* hPubKeyFile = NULL;
+        if(fopen_s(&hPubKeyFile, strPemFileName.c_str(), "rb") || hPubKeyFile == NULL)
+        {
+            assert(false);
+            return ""; 
+        }
+        std::string strRet;
+        RSA* pRSAPublicKey = RSA_new();
+        if(PEM_read_RSA_PUBKEY(hPubKeyFile, &pRSAPublicKey, 0, 0) == NULL)
+        {
+            assert(false);
+            return "";
+        }
+
+        int nLen = RSA_size(pRSAPublicKey);
+        char* pEncode = new char[nLen + 1];
+        int ret = RSA_public_encrypt(strData.length(), (const unsigned char*)strData.c_str(), (unsigned char*)pEncode, pRSAPublicKey, RSA_PKCS1_PADDING);
+        if (ret >= 0)
+        {
+            strRet = std::string(pEncode, ret);
+        }
+        delete[] pEncode;
+        RSA_free(pRSAPublicKey);
+        fclose(hPubKeyFile);
+        CRYPTO_cleanup_all_ex_data(); 
+        return strRet;
+}
+
+
+RSA解密部分代码demo：
+std::string DecodeRSAKeyFile( const std::string& strPemFileName, const std::string& strData )
+{
+        if (strPemFileName.empty() || strData.empty())
+        {
+            assert(false);
+            return "";
+        }
+        FILE* hPriKeyFile = NULL;
+        if(fopen_s(&hPriKeyFile, strPemFileName.c_str(),"rb") || hPriKeyFile == NULL)
+        {
+            assert(false);
+            return "";
+        }
+        std::string strRet;
+        RSA* pRSAPriKey = RSA_new();
+        if(PEM_read_RSAPrivateKey(hPriKeyFile, &pRSAPriKey, 0, 0) == NULL)
+        {
+            assert(false);
+            return "";
+        }
+        int nLen = RSA_size(pRSAPriKey);
+        char* pDecode = new char[nLen+1];
+
+        int ret = RSA_private_decrypt(strData.length(), (const unsigned char*)strData.c_str(), (unsigned char*)pDecode, pRSAPriKey, RSA_PKCS1_PADDING);
+        if(ret >= 0)
+        {
+            strRet = std::string((char*)pDecode, ret);
+        }
+        delete [] pDecode;
+        RSA_free(pRSAPriKey);
+        fclose(hPriKeyFile);
+        CRYPTO_cleanup_all_ex_data(); 
+        return strRet;
+}
+
+RSA的API中当使用参数RSA_PKCS1_PADDING时，明文长度不能大于密文长度-11；当使用参数RSA_NO_PADDING时，明文长度需要正好是128。
+AES加密部分代码：
+std::string EncodeAES( const std::string& strPassword, const std::string& strData )
+{
+        AES_KEY aes_key;
+        if(AES_set_encrypt_key((const unsigned char*)strPassword.c_str(), strPassword.length() * 8, &aes_key) < 0)
+        {
+            assert(false);
+            return "";
+        }
+        std::string strRet;
+        for(unsigned int i = 0; i < strData.length()/AES_BLOCK_SIZE; i++)
+        {
+            std::string str16 = strData.substr(i*AES_BLOCK_SIZE, AES_BLOCK_SIZE);
+            unsigned char out[AES_BLOCK_SIZE];
+            AES_encrypt((const unsigned char*)str16.c_str(), out, &aes_key);
+            strRet += std::string((const char*)out, AES_BLOCK_SIZE);
+        }
+        return strRet;
+}
+
+AES解密部分代码：
+std::string DecodeAES( const std::string& strPassword, const std::string& strData )
+{
+        AES_KEY aes_key;
+        if(AES_set_decrypt_key((const unsigned char*)strPassword.c_str(), strPassword.length() * 8, &aes_key) < 0)
+        {
+            assert(false);
+            return "";
+        }
+        std::string strRet;
+        for(unsigned int i = 0; i < strData.length()/AES_BLOCK_SIZE; i++)
+        {
+            std::string str16 = strData.substr(i*AES_BLOCK_SIZE, AES_BLOCK_SIZE);
+            unsigned char out[AES_BLOCK_SIZE];
+            AES_decrypt((const unsigned char*)str16.c_str(), out, &aes_key);
+            strRet += std::string((const char*)out, AES_BLOCK_SIZE);
+        }
+        return strRet;
+}
