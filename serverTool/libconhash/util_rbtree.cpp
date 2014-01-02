@@ -101,13 +101,13 @@
             }
             else
             {
-                if(node == p->right) /* case 2: p:read, u:black, node is right child */
+                if(node == p->right) /* case 2: p:red, u:black, node is right child */
                 {
                     node = p;
                     rbtree_left_rotate(rbtree, node);
                     p = node->parent;
                 }
-                /* case 3: p:read, u:black, node is left child */
+                /* case 3: p:red, u:black, node is left child */
                 util_rbt_black(p);
                 util_rbt_red(p->parent);
                 rbtree_right_rotate(rbtree, p->parent);
